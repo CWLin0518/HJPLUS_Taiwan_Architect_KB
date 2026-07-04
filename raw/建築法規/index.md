@@ -2,7 +2,8 @@
 
 ## Skills
 
-* [消防安全](消防安全/排煙窗法規檢討/smoke-exhaust-review/SKILL.md) - Smoke exhaust compliance evaluation including windowless floor determination, smoke compartment partitioning, and effective area calculations
+* [消防安全 — 排煙窗法規檢討](消防安全/排煙窗法規檢討/smoke-exhaust-review/SKILL.md) - Smoke exhaust compliance evaluation including windowless floor determination, smoke compartment partitioning, and effective area calculations
+* [消防安全 — 發電機室消防規範](消防安全/generator-room-fire-safety/SKILL.md) - Generator room fire safety review including fuel tank capacity, maintenance clearances, and ventilation requirements
 * [建築技術規則](建築技術規則/樓梯欄杆坡道/taiwan-stair-railing-ramp/SKILL.md) - Stair dimensional compliance, minimum stair-and-landing width, riser height, tread depth, and handrail-encroachment rules
 * [容積率與建蔽率計算](容積率與建蔽率計算/容積免計實務陷阱/floor-area-exemption-pitfalls/SKILL.md) - Floor-area-ratio (FAR) exemption review and finished clear dimension compliance
 * [無障礙設計](無障礙設計/無障礙出入口門淨寬實務陷阱/accessible-door-clear-width/SKILL.md) - Accessible-route door/opening clear-width compliance and nominal-vs-effective dimension gap
