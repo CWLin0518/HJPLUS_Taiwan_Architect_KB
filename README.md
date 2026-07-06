@@ -25,6 +25,7 @@
 <details>
 <summary>點開查看近期已合併的 PR（感謝所有貢獻者！）</summary>
 
+- **2026-07-04** ♿ 新增無障礙電梯機道尺寸對應表技能（三菱、永大、崇友三品牌 P8–P13）([#25](https://github.com/h30190/HJPLUS_Taiwan_Architect_KB/pull/25) by @7alexhuang-ux)
 - **2026-07-04** 🔌 新增自來水、台電與發電機消防等 5 項機電相關技能 ([#24](https://github.com/h30190/HJPLUS_Taiwan_Architect_KB/pull/24) by @SEven777-a)
 - **2026-06-26** 📜 新增地方自治法規分類（台中市宜居建築設施設置及回饋辦法）([#22](https://github.com/h30190/HJPLUS_Taiwan_Architect_KB/pull/22) by @Archwiz-boss)
 - **2026-06-25** 🏗️ 新增公共工程品質資料庫技能 ([#19](https://github.com/h30190/HJPLUS_Taiwan_Architect_KB/pull/19) by @yen-shi-lun)
