@@ -55,61 +55,43 @@ def scan(raw):
     def add_link(source, target):
         links.append({"source": source, "target": target})
 
-    # Walk directories
+    def walk_dir(dir_path, rel_parts, parent_id, group, level):
+        """Recursively add directories and skill nodes below a category."""
+        skill_path = os.path.join(dir_path, "SKILL.md")
+        if os.path.isfile(skill_path):
+            fm = parse_frontmatter(skill_path)
+            rel = "/".join(rel_parts)
+            skill_id = f"skill:{rel}"
+            skill_label = fm.get("name", rel_parts[-1])
+            add_node(skill_id, skill_label, group, min(level, 2))
+            add_link(parent_id, skill_id)
+            return
+
+        dir_id = f"dir:{'/'.join(rel_parts)}"
+        add_node(dir_id, rel_parts[-1], group, min(level, 2))
+        add_link(parent_id, dir_id)
+
+        for child in sorted(os.listdir(dir_path)):
+            child_path = os.path.join(dir_path, child)
+            if not os.path.isdir(child_path) or child.startswith("."):
+                continue
+            walk_dir(child_path, rel_parts + [child], dir_id, group, level + 1)
+
     for cat_name in sorted(os.listdir(raw)):
         cat_path = os.path.join(raw, cat_name)
         if not os.path.isdir(cat_path) or cat_name.startswith("."):
             continue
 
         cat_id = f"cat:{cat_name}"
-        cat_idx = len([k for k in cat_colors])
+        cat_idx = len(cat_colors)
         cat_colors[cat_name] = palette[cat_idx % len(palette)]
         add_node(cat_id, cat_name, cat_name, 0)
 
-        for entry_name in sorted(os.listdir(cat_path)):
-            entry_path = os.path.join(cat_path, entry_name)
-            if not os.path.isdir(entry_path) or entry_name.startswith("."):
+        for child in sorted(os.listdir(cat_path)):
+            child_path = os.path.join(cat_path, child)
+            if not os.path.isdir(child_path) or child.startswith("."):
                 continue
-
-            # Check if this entry has skill subdirs
-            skill_dirs = []
-            for sub in sorted(os.listdir(entry_path)):
-                sub_path = os.path.join(entry_path, sub)
-                if os.path.isdir(sub_path) and not sub.startswith("."):
-                    skill_path = os.path.join(sub_path, "SKILL.md")
-                    if os.path.isfile(skill_path):
-                        skill_dirs.append((sub, skill_path))
-                    else:
-                        # Could be old-style: SKILL.md in entry itself
-                        pass
-
-            # Old-style: SKILL.md directly in entry dir
-            old_style_skill = os.path.join(entry_path, "SKILL.md")
-            if os.path.isfile(old_style_skill):
-                fm = parse_frontmatter(old_style_skill)
-                skill_id = f"skill:{cat_name}/{entry_name}"
-                skill_label = fm.get("name", entry_name)
-                add_node(skill_id, skill_label, cat_name, 2)
-                add_link(cat_id, skill_id)
-                continue
-
-            if skill_dirs:
-                # This entry is a sub-category with multiple skills
-                entry_id = f"entry:{cat_name}/{entry_name}"
-                add_node(entry_id, entry_name, cat_name, 1)
-                add_link(cat_id, entry_id)
-
-                for skill_name, skill_path in skill_dirs:
-                    fm = parse_frontmatter(skill_path)
-                    skill_id = f"skill:{cat_name}/{entry_name}/{skill_name}"
-                    skill_label = fm.get("name", skill_name)
-                    add_node(skill_id, skill_label, cat_name, 2)
-                    add_link(entry_id, skill_id)
-            else:
-                # Empty or planned entry — just show it as leaf
-                entry_id = f"entry:{cat_name}/{entry_name}"
-                add_node(entry_id, entry_name, cat_name, 1)
-                add_link(cat_id, entry_id)
+            walk_dir(child_path, [cat_name, child], cat_id, cat_name, 1)
 
     return {"nodes": nodes, "links": links}, cat_colors
 
