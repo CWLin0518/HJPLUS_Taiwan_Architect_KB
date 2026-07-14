@@ -18,6 +18,9 @@ README = Path(__file__).resolve().parent.parent / "README.md"
 # Section → (default_class, individual overrides)
 # Overrides key = relative path WITHOUT the /SKILL.md suffix
 SECTION_CLASS = {
+    "建築顧問方法論": {"default": "C", "overrides": {
+        "建築顧問方法論/不確定性標示與來源管控/uncertainty-and-source-control": "A",
+    }},
     "建築設計與規劃": {"default": "A", "overrides": {
         "建築設計與規劃/設計理論/spatial-planning": "B",
     }},

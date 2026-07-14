@@ -11,6 +11,12 @@
 
 不用擔心你不會用 Git，只要有一點建築的實務經驗或心得就可以貢獻。
 
+### 不熟 GitHub？用講的就好
+
+上面四個步驟一個都不會也沒關係——開一則 **[知識/經驗投稿](../../issues/new?template=knowledge.yml)** 就可以了：把你的經驗用自己的話寫下來（就像跟同事聊案子那樣），格式、分類、雙語整理全部交給維護者。很多最有價值的知識是「經歷過才知道」的實務經驗，這種東西本來就沒有標準格式，先寫下來最重要。
+
+如果你已經會開 PR，但拿不準格式規則，也**直接送出來就好**——照這個專案一直以來的慣例，維護者會在合併後幫忙整理格式，你的名字會完整留在貢獻紀錄裡。
+
 ## 目錄長怎樣
 
 每個主題（技能）的完整結構如下：
@@ -89,6 +95,9 @@ compatibility: claude-code,opencode,agent-skills
 metadata:
   audience: architects
   region: taiwan
+  class: C
+  status: draft
+  data-currency: "YYYY-MM-DD"
 ---
 ```
 
@@ -98,7 +107,10 @@ metadata:
 | `description` | **必填**，1-1024 字，必須包含具體觸發情境，讓 AI 知道何時呼叫此技能 |
 | `license` | 可選，授權聲明 |
 | `compatibility` | 可選，相容性宣告 |
-| `metadata` | 可選，key-value 擴充欄位 |
+| `metadata.class` | **必填**，`A`／`B`／`C`（分類定義見下表） |
+| `metadata.status` | 可選，`verified`（數值已逐條查證）／`unverified`（數值未查證，AI 引用前必重查）／`draft`（骨架） |
+| `metadata.data-currency` | 建議填，`"YYYY-MM-DD"`——最後一次查證來源的日期 |
+| `metadata`（其他 key） | 可選，key-value 擴充欄位 |
 
 ### 技能分類與特殊要求
 
@@ -139,6 +151,18 @@ metadata:
 - **SKILL.md 保持精簡**：建議控制在 500 行以內，詳細法規條文或參考資料請放進 `references/` 資料夾。
 - **B 類技能不要刪除 TODO 標記**：`<!-- TODO: Taiwan adaptation needed -->` 是提醒待完成的台灣適配，完成後才能移除。
 - **C 類技能必須有 MCP 範例**：包含 `taiwan-building-code_search_building_code` 等工具呼叫範例，方便 AI 對接官方資料庫。
+
+## 品質檢查清單（送 PR 前自己過一遍）
+
+這份清單來自知識庫的方法論層（`raw/建築顧問方法論/`），目的是避免「AI 自信地引用錯數字」：
+
+- [ ] **規範性數值必附條號**：尺寸、比例、金額、罰則，每個數字都要有法源條號。**沒有條號的罰則或門檻金額，寧可不寫**——寫了 AI 會當事實引用。
+- [ ] **附查證日期**：frontmatter 填 `data-currency: "YYYY-MM-DD"`，正文有 Data Currency 段說明來源與變動風險。
+- [ ] **`metadata.class` 必填**：A（國際通用）／B（國際適配）／C（台灣法規）。
+- [ ] **誠實標示狀態**：數值沒逐條查證就標 `status: unverified`，不要假裝查過。解不掉的點寫進「To Verify」段，不要默默省略。
+- [ ] **查重疊、互連結**：搜尋 `raw/` 有沒有主題重疊的技能；有就互列 Related Skills 並在 Overview 聲明分工（誰管陷阱、誰管算法）。
+- [ ] **至少一個實作範例**：只有規則沒有 worked example 的技能是查表，不是技能。
+- [ ] **「典型值」要標明**：業界慣用值（例如「一般 5–10%」）必須明寫是實務慣例，不可寫得像法規規定。
 
 ## 我們怎麼處理你的貢獻
 

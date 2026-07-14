@@ -6,6 +6,7 @@ compatibility: claude-code,opencode,agent-skills
 metadata:
   audience: architects
   region: taiwan
+  class: C
 ---
 
 # Taiwan Stair / Railing / Ramp Compliance (建築技術規則 §33–39)

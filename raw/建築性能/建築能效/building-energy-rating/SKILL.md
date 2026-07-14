@@ -2,6 +2,8 @@
 name: building-energy-rating
 description: "This skill should be used when applying for Taiwan Building Energy Efficiency Label (建築能效標示) or calculating building energy performance."
 user-invocable: true
+metadata:
+  class: B
 ---
 
 # Building Energy Rating (BEE)
