@@ -3,23 +3,49 @@
 ## Overview
 Knowledge base for Taiwan architects with dual-language skill documentation. All working content lives under `raw/`. Use `知識樣板/` as the template when creating new skills.
 
+## Consulting Protocol — READ THIS FIRST when answering architecture questions
+
+There are two distinct tasks in this repository. Identify yours before doing anything:
+
+1. **Consulting** — answering a Taiwan architecture/regulation/design question using this KB.
+2. **Maintenance** — creating or editing skills, indexes, or repo infrastructure.
+
+**If consulting**: before answering, read `raw/建築顧問方法論/index.md` and start from
+[consultation-workflow](raw/建築顧問方法論/顧問諮詢工作流程/consultation-workflow/SKILL.md).
+The five methodology skills there are **horizontal rules** that override topical habit:
+
+- Route through skill **clusters**, not the first matching skill (a §162 FAR question needs 2+ skills).
+- Every normative number you output needs an article number + verification date, or an explicit `Unverified` label.
+- Skills marked `metadata.status: unverified` — their numbers are hypotheses; re-verify before quoting.
+- Gray-zone questions (discretionary wording, undefined measurements, municipal divergence) get the
+  lean + basis + authority + 函詢/預審 recommendation format — never a bare yes/no.
+- Dual-track domains (fire, accessibility, local add-ons): cite both tracks or declare the unchecked one.
+
+**If maintaining**: follow the sections below, and apply
+[uncertainty-and-source-control](raw/建築顧問方法論/不確定性標示與來源管控/uncertainty-and-source-control/SKILL.md)
+to any content you author (no unsourced penalty/threshold figures, label certainty, keep To-Verify sections).
+
 ## Project Structure
 All skill content is in `raw/`. There is no separate published/flat structure.
 
 ```
 raw/
-├── 建築設計與規劃/       (5 skills)
-├── 專業複委託/            (4 skills)
-├── 建築性能/              (12 skills)
-├── 建築法規/              (2 skills)
-├── 建築施工與材料/        (5 skills)
-├── 建築執照/              (16 skills)
-├── 公共工程/              (2 skills)
-├── 專案管理/              (skills)
-├── 經營管理/              (skills)
-├── 室內裝修/              (skills)
-└── 設計軟體與工具/        (skills)
+├── 建築顧問方法論/        (horizontal methodology — consulting entry point)
+├── 建築設計與規劃/
+├── 專業複委託/
+├── 建築性能/
+├── 建築法規/
+├── 建築施工與材料/
+├── 建築執照/
+├── 公共工程/
+├── 專案管理/
+├── 經營管理/
+├── 室內裝修/
+└── 設計軟體與工具/
 ```
+
+Do not hardcode per-category skill counts here — they go stale. Current counts live in `README.md`
+(auto-updated by `python scripts/update_readme_counts.py`); the authoritative discovery path is `raw/index.md`.
 
 Template: `知識樣板/` — copy this to create new skills.
 
@@ -28,12 +54,43 @@ Documentation-only repository. No build/lint/test commands.
 
 Pre-commit hook (`.pre-commit-config.yaml`): runs `python scripts/run_graphify.py` when `raw/` or `graphify.py` changes. Script may not yet exist.
 
-## Skill Classification
+## Skill Classification & Status Metadata
+
 | Class | Description | Requirements |
 |-------|-------------|--------------|
 | A | International standards | No Taiwan adaptation needed |
 | B | International → Taiwan | `<!-- TODO: Taiwan adaptation needed -->` before US/international spec blocks |
 | C | Taiwan-specific | May include MCP tool call examples (optional) |
+
+**`metadata.class` is REQUIRED** in every SKILL.md frontmatter (`A`, `B`, or `C`). All existing skills
+carry it; new skills must declare it. The class-assignment reference table is `SECTION_CLASS` in
+`scripts/update_readme_counts.py` — keep the two consistent.
+
+**`metadata.status`** (optional, but load-bearing when present):
+
+| Value | Meaning | Reader behavior |
+|-------|---------|-----------------|
+| `verified` | Normative numbers transcribed clause-by-clause from official text | Quotable with the recorded date |
+| `unverified` | Numbers drafted from general knowledge, never clause-verified | Structure usable as orientation; **numbers must be re-verified before quoting** |
+| `draft` | Incomplete skeleton | Do not rely on it |
+
+**`metadata.data-currency`** (recommended): `"YYYY-MM-DD"` date of the last source verification. See
+[regulation-currency-check](raw/建築顧問方法論/法規時效性查證/regulation-currency-check/SKILL.md) for
+when stale data forces re-verification.
+
+## Cross-Referencing Rule
+
+Skills do not exist in isolation — AI answers fail when related skills don't know about each other.
+
+- Before creating a skill, search `raw/` for overlapping topics. If overlap exists, either merge or
+  **declare the division of labor** in both skills' Overview (e.g., "this skill covers the pitfalls;
+  the calculation algorithm lives in X").
+- Every skill should end with a `## Related Skills` section linking (relative paths) to skills a
+  consultant would need in the same session. The §162 pair
+  (`floor-area-exemption-pitfalls` ↔ `balcony-lobby-far-recalculation`) and the concrete group are
+  the reference examples.
+- When adding a skill that belongs to a question cluster, also add it to the cluster table in
+  [consultation-workflow](raw/建築顧問方法論/顧問諮詢工作流程/consultation-workflow/SKILL.md) Section 1 Step 3.
 
 ## File Naming — CRITICAL
 
@@ -123,6 +180,9 @@ compatibility: claude-code,opencode,agent-skills
 metadata:
   audience: architects
   region: taiwan
+  class: C
+  status: verified
+  data-currency: "2026-07-10"
 ---
 ```
 
@@ -132,7 +192,10 @@ metadata:
 | `description` | Yes | 1-1024 chars, must include trigger scenario |
 | `license` | Optional | License statement |
 | `compatibility` | Optional | Compatibility declaration |
-| `metadata` | Optional | Key-value extensions |
+| `metadata.class` | **Yes** | `A`/`B`/`C` — see Skill Classification & Status Metadata |
+| `metadata.status` | Optional | `verified`/`unverified`/`draft` — see Skill Classification & Status Metadata |
+| `metadata.data-currency` | Recommended | `"YYYY-MM-DD"` of last source verification |
+| `metadata` (other keys) | Optional | Key-value extensions |
 
 ## domain.md
 - Traditional Chinese, no frontmatter

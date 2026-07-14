@@ -1,6 +1,8 @@
 ---
 name: generator-room-fire-safety
 description: "This skill should be used when reviewing the architectural and MEP designs of a generator room, specifically checking the fuel tank capacity, maintenance clearances, and ventilation requirements according to Taiwan fire safety interpretations."
+metadata:
+  class: C
 ---
 
 # Generator Room Fire Safety & Fuel Tank Capacity

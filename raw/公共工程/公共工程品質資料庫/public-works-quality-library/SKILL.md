@@ -6,6 +6,7 @@ compatibility: claude-code,opencode,agent-skills
 metadata:
   audience: architects
   region: taiwan
+  class: C
 ---
 
 # Public Works Quality Library
