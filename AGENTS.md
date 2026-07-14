@@ -236,6 +236,17 @@ pcc-downloader_download_specification(chapter="09", keyword="09910", format="pdf
 - Preserve `<!-- TODO -->` markers in B-class skills
 - When adding or removing a skill, update the parent directory's `index.md` accordingly
 
+## Post-Merge Maintenance
+
+After merging a PR, the maintainer must:
+
+1. **Update README `## 📰 最近更新`** — Add a new entry at the top of the list with the format:
+   ```
+   - **YYYY-MM-DD** {emoji} {brief description} ([#{pr-number}](url) by @author)
+   ```
+2. **Update parent `index.md`** — If the PR added or removed skills, sync the parent directory's `index.md` `## Skills` list per [OKF v0.1](#indexmd--okf-directory-index-v01).
+3. **Run `python scripts/update_readme_counts.py`** to refresh the skill count table (auto-runs via pre-commit hook if configured, but verify the numbers match).
+
 ## Markdown Style
 - One `# H1` per file
 - `##` for major sections, `###` for subsections
