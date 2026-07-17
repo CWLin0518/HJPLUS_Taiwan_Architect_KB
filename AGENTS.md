@@ -236,6 +236,16 @@ pcc-downloader_download_specification(chapter="09", keyword="09910", format="pdf
 - Preserve `<!-- TODO -->` markers in B-class skills
 - When adding or removing a skill, update the parent directory's `index.md` accordingly
 
+## Pre-Merge Verification
+
+Before merging a PR, the maintainer must independently verify any **new or changed `[Verified]` value**
+(dimension, factor, cap, fee, penalty) against the official source per
+[regulation-currency-check](raw/建築顧問方法論/法規時效性查證/regulation-currency-check/SKILL.md) — do
+not trust the tag the contributor attached. If the source cannot be confirmed, require the value be
+downgraded to `[Unverified]` or reject it. Adding `[Unverified]` / `[Secondary]` content is not subject
+to this check (readers already treat those as non-authoritative). Rationale: `[Verified]` is the only tag
+that unlocks 「規定為/必須」 tone, so the maintainer's verification cost is concentrated there.
+
 ## Post-Merge Maintenance
 
 After merging a PR, the maintainer must:
