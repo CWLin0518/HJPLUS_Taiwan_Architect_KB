@@ -1,0 +1,44 @@
+name: Update landing page data
+
+# 重產 docs/data.json（landing page 的知識圖譜、tag、最新更新、統計數字）。
+# paths-ignore 防止本 workflow 自己的 commit 再觸發一次（無限迴圈）。
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'docs/data.json'
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # commit count 需要完整歷史
+
+      - name: Fetch contributors and merged PR count
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          contributors=$(gh api "repos/${{ github.repository }}/contributors?per_page=100" --jq '[.[].login]' || echo 'null')
+          merged=$(gh api "search/issues?q=repo:${{ github.repository }}+type:pr+is:merged" --jq '.total_count' || echo 'null')
+          printf '{"contributors": %s, "mergedPRs": %s}\n' "$contributors" "$merged" > /tmp/gh-stats.json
+          cat /tmp/gh-stats.json
+
+      - name: Generate docs/data.json
+        run: python scripts/update_landing_page.py --github-stats /tmp/gh-stats.json
+
+      - name: Commit if changed
+        run: |
+          if git diff --quiet docs/data.json; then
+            echo "data.json unchanged, nothing to commit"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/data.json
+          git commit -m "chore: update landing page data [skip ci]"
+          git push

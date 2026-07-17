@@ -359,7 +359,7 @@
 
     <details>
       <summary>最新更新</summary>
-      <ul>
+      <ul id="updatesList">
         <li><span class="date">2026-06-19</span>🧰 新增設計軟體與工具分類（Archicad 4 個技能模組）</li>
         <li><span class="date">2026-06-19</span>🪜 新增樓梯欄杆坡道技能（建技規 §33 樓梯寬度）</li>
         <li><span class="date">2026-06-19</span>📐 新增容積免計實務陷阱技能</li>
@@ -371,7 +371,7 @@
       </ul>
     </details>
 
-    <div class="tag-list">
+    <div class="tag-list" id="tagList">
       <span class="tag">設計理論</span>
       <span class="tag">容積計算</span>
       <span class="tag">消防法規</span>
@@ -493,6 +493,7 @@
     return m ? parseInt(m[1]) : null;
   }
   function apply(stats) {
+    window.__ghStatsApplied = true;
     // hero counters (data-to)
     var h = document.querySelectorAll('.hero-stats .h-counter');
     var hVals = [stats.c, stats.pr || 0, stats.cat, stats.s, stats.con];
@@ -547,6 +548,68 @@
     apply(stats);
   }).catch(function() { /* keep hardcoded */ });
 })();
+
+// ── build-time data（docs/data.json，由 scripts/update_landing_page.py 自動產生）──
+window.__kbDataPromise = fetch('data.json')
+  .then(function(r) { return r.ok ? r.json() : null; })
+  .catch(function() { return null; });
+window.__kbDataPromise.then(function(d) {
+  if (!d) return;
+  // 最新更新
+  if (d.updates && d.updates.length) {
+    var ul = document.getElementById('updatesList');
+    if (ul) {
+      ul.innerHTML = '';
+      d.updates.forEach(function(u) {
+        var li = document.createElement('li');
+        var sp = document.createElement('span');
+        sp.className = 'date';
+        sp.textContent = u.date;
+        li.appendChild(sp);
+        li.appendChild(document.createTextNode(u.text));
+        ul.appendChild(li);
+      });
+    }
+  }
+  // 主題 tags（raw/ 分類目錄名）
+  if (d.tags && d.tags.length) {
+    var tl = document.getElementById('tagList');
+    if (tl) {
+      tl.innerHTML = '';
+      d.tags.concat(['…等你開新主題']).forEach(function(t) {
+        var s = document.createElement('span');
+        s.className = 'tag';
+        s.textContent = t;
+        tl.appendChild(s);
+      });
+    }
+  }
+  // 統計與貢獻者：GitHub API 已套用（更即時）就跳過，這裡只當基準值
+  if (window.__ghStatsApplied) return;
+  if (d.stats) {
+    var st = d.stats;
+    var h = document.querySelectorAll('.hero-stats .h-counter');
+    var hVals = [st.commits, st.mergedPRs, st.categories, st.skills, st.contributors];
+    for (var i = 0; i < h.length; i++) if (hVals[i]) h[i].dataset.to = hVals[i];
+    var c = document.querySelectorAll('.cta-stat .num');
+    var cVals = [st.commits, st.mergedPRs, st.contributors, st.skills];
+    for (var j = 0; j < c.length; j++) if (cVals[j]) c[j].dataset.to = cVals[j];
+    var cc = document.getElementById('contribCount');
+    if (cc && st.contributors) cc.textContent = st.contributors;
+  }
+  if (d.contributors && d.contributors.length) {
+    var cl = document.getElementById('contribList');
+    if (cl) {
+      cl.innerHTML = '';
+      d.contributors.forEach(function(name) {
+        var s = document.createElement('span');
+        s.className = 'contributor';
+        s.textContent = name;
+        cl.appendChild(s);
+      });
+    }
+  }
+});
 // ── dot nav builder ──
 const sections = [
   { id: 'sec-hero',    label: '首頁' },
@@ -741,61 +804,8 @@ setTimeout(() => {
 })();
 
 // ── knowledge graph background ──
-(function() {
-  var tree = [
-    { name: '建築設計與規劃', children: [
-      { name: '設計理論', skills: ['建築計畫', '都市設計', '防災規劃'] },
-      { name: '空間規劃', skills: ['分區規劃', '動線設計'] },
-      { name: '建築外觀', skills: ['立面設計', '帷幕牆'] }
-    ]},
-    { name: '專業複委託', children: [
-      { name: '結構', skills: ['結構系統', '基礎設計'] },
-      { name: '機電', skills: ['機電協調', '管線設計'] },
-      { name: '環工', skills: ['水土保持', '地質調查'] }
-    ]},
-    { name: '建築性能', children: [
-      { name: '物理環境', skills: ['採光分析', '風環境', '聲學模擬'] },
-      { name: '能源', skills: ['能源分析', 'BAPV', '智慧玻璃'] },
-      { name: '消防性能', skills: ['排煙窗檢討', '避難驗證'] },
-      { name: '數位', skills: ['數位孿生', 'HEAM'] }
-    ]},
-    { name: '建築法規', children: [
-      { name: '技術規則', skills: ['防火區劃', '樓梯寬度', '無障礙'] },
-      { name: '消防法規', skills: ['消防設備', '撒水系統'] },
-      { name: '解釋函令', skills: ['函釋檢索', '實務見解'] }
-    ]},
-    { name: '施工與材料', children: [
-      { name: '施工法', skills: ['鋼筋混凝土', '鋼構', '預鑄工法'] },
-      { name: '材料', skills: ['材料規範', '綠色材料', '品質檢驗'] },
-      { name: 'BIM施工', skills: ['BIM 360', '施工模擬'] }
-    ]},
-    { name: '建築執照', children: [
-      { name: '申請類', skills: ['建造執照', '使照申請', '雜項執照', '拆除執照'] },
-      { name: '變更類', skills: ['變更使用', '容積移轉', '山坡地審查'] },
-      { name: '審查類', skills: ['無障礙審查', '防火避難', '都市設計審議'] }
-    ]},
-    { name: '公共工程', children: [
-      { name: '招標', skills: ['公開招標', '公開閱覽'] },
-      { name: '品管', skills: ['公共工程品管', '查核'] }
-    ]},
-    { name: '專案管理', children: [
-      { name: '管理職能', skills: ['進度管理', '成本控制', '合約管理'] },
-      { name: 'BIM專案', skills: ['BIM執行計畫', '模型管理'] }
-    ]},
-    { name: '經營管理', children: [
-      { name: '營運', skills: ['事務所經營', '財務管理'] },
-      { name: '人力', skills: ['人事制度', '教育訓練'] }
-    ]},
-    { name: '室內裝修', children: [
-      { name: '設計', skills: ['室內設計', '燈光設計'] },
-      { name: '法規', skills: ['裝修法規', '施工管理'] }
-    ]},
-    { name: '設計軟體', children: [
-      { name: 'BIM', skills: ['Revit', 'Archicad', 'Tekla'] },
-      { name: '2D/3D', skills: ['AutoCAD', 'SketchUp', 'Rhino'] },
-      { name: '分析', skills: ['GIS', 'IES VE'] }
-    ]}
-  ];
+// tree 來自 data.json（scripts/update_landing_page.py 掃 raw/ 自動產生）
+function initKnowledgeGraph(tree) {
   var containers = document.querySelectorAll('.kg-wrap');
   if (!containers.length) return;
 
@@ -859,7 +869,7 @@ setTimeout(() => {
         var cn = { name: cat.name, x: p.x, y: p.y, ox: p.x, oy: p.y, level: 0, r: 8, children: [] };
         allNodes.push(cn);
 
-        cat.children.forEach(function(sub) {
+        (cat.children || []).forEach(function(sub) {
           var sp, sok = false, stries = 0;
           while (!sok && stries < 150) {
             sp = { x: p.x + (Math.random()-0.5)*160, y: p.y + (Math.random()-0.5)*160 };
@@ -871,7 +881,7 @@ setTimeout(() => {
           allNodes.push(sn);
           cn.children.push(sn);
 
-          sub.skills.forEach(function(skill) {
+          (sub.skills || []).forEach(function(skill) {
             var skp, skok = false, sktries = 0;
             while (!skok && sktries < 80) {
               skp = { x: sp.x + (Math.random()-0.5)*80, y: sp.y + (Math.random()-0.5)*80 };
@@ -999,7 +1009,13 @@ setTimeout(() => {
     rafId = requestAnimationFrame(draw);
     window.addEventListener('resize', resize);
   });
-})();
+}
+
+// data.json 讀不到時（例如以 file:// 開啟），退回只有分類骨架的圖譜
+(window.__kbDataPromise || Promise.resolve(null)).then(function(d) {
+  var fallback = ['建築顧問方法論','建築法規','建築執照','建築性能','建築設計與規劃','建築施工與材料','專業複委託','公共工程','專案管理','經營管理','設計軟體與工具'].map(function(n) { return { name: n, children: [] }; });
+  initKnowledgeGraph(d && d.tree && d.tree.length ? d.tree : fallback);
+});
 </script>
 
 </body>
