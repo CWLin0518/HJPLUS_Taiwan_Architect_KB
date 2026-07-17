@@ -258,10 +258,12 @@ After merging a PR, the maintainer must:
 3. **Run `python scripts/update_readme_counts.py`** to refresh the skill count table (auto-runs via pre-commit hook if configured, but verify the numbers match).
 
 The landing page data (`docs/data.json` — knowledge-graph tree, tag list, 最新更新, stat counters)
-is **auto-regenerated** by the `update-landing-data` GitHub Action on every push to main
-(`scripts/update_landing_page.py`). Do NOT edit `docs/data.json` by hand — it will be overwritten.
-Its 最新更新 list is parsed from README `## 📰 最近更新`, so keeping step 1 above accurate is what
-keeps the landing page accurate. To preview locally, run `python scripts/update_landing_page.py`.
+is **auto-regenerated at deploy time**: the `Deploy landing page` GitHub Action runs
+`scripts/update_landing_page.py` on every push to main and publishes docs/ (with the fresh
+data.json) to GitHub Pages. Do NOT edit `docs/data.json` by hand — the committed copy is only a
+local-preview fallback; the deployed site always uses the freshly generated one. Its 最新更新 list
+is parsed from README `## 📰 最近更新`, so keeping step 1 above accurate is what keeps the landing
+page accurate. To preview locally, run `python scripts/update_landing_page.py`.
 
 ## Markdown Style
 - One `# H1` per file

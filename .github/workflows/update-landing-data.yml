@@ -1,19 +1,28 @@
-name: Update landing page data
+name: Deploy landing page
 
-# 重產 docs/data.json（landing page 的知識圖譜、tag、最新更新、統計數字）。
-# paths-ignore 防止本 workflow 自己的 commit 再觸發一次（無限迴圈）。
+# 部署 docs/ 到 GitHub Pages，並在部署前重產 docs/data.json
+# （landing page 的知識圖譜、tag、最新更新、統計數字）。
+# data.json 只進部署產物、不 commit 回 main，因此不受分支保護限制。
 on:
   push:
     branches: [main]
-    paths-ignore:
-      - 'docs/data.json'
   workflow_dispatch:
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
 jobs:
-  update:
+  deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -31,14 +40,11 @@ jobs:
       - name: Generate docs/data.json
         run: python scripts/update_landing_page.py --github-stats /tmp/gh-stats.json
 
-      - name: Commit if changed
-        run: |
-          if git diff --quiet docs/data.json; then
-            echo "data.json unchanged, nothing to commit"
-            exit 0
-          fi
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/data.json
-          git commit -m "chore: update landing page data [skip ci]"
-          git push
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+
+      - id: deployment
+        uses: actions/deploy-pages@v4
