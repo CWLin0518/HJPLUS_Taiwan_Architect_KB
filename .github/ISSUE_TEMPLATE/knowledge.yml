@@ -45,7 +45,7 @@ body:
     id: evidence
     attributes:
       label: 📎 有沒有依據或佐證（選填）
-      description: 公文字號、函釋、審查意見、照片說明……有就貼，沒有也完全沒關係，經驗本身就有價值
+      description: 公文字號、函釋、審查意見、照片說明……有就貼，沒有也完全沒關係，經驗本身就有價值。⚠️ 貼之前請先隱去業主／當事人姓名、地址、聯絡方式等可識別資訊，勿附未公開的圖說或合約
       placeholder: e.g. 內政部○年○月○日營署建管字第○○號函／審查意見影本重點
     validations:
       required: false
@@ -69,4 +69,6 @@ body:
         - label: 我確認內容與台灣 AEC（建築×工程×營造）實務相關
           required: true
         - label: 我了解投稿內容將以開源授權（CC BY-SA 4.0）整理進知識庫
+          required: true
+        - label: 我確認投稿內容未包含業主機密、個人資料或受保密協議（NDA）拘束的資料，且已做適當去識別化
           required: true
