@@ -3,10 +3,10 @@ name: building-energy-rating
 description: "This skill should be used when applying for Taiwan Building Energy-Efficiency Rating System (建築能效標示, BERS) or calculating building energy performance."
 user-invocable: true
 metadata:
-  class: B
+  class: C
 ---
 
-# Building Energy Rating (BERS)
+# Building Energy-Efficiency Rating System (BERS)
 
 ## Overview
 建築能效標示（Building Energy-Efficiency Rating System, BERS）是內政部建築研究所於2022年實施的建築能效評估制度，主要評估建築物使用階段之能源使用效率，為達成2050年淨零建築願景的重要政策工具。
