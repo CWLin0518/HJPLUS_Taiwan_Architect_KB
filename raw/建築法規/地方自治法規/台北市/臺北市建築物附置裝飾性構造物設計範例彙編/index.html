@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>臺北市建築物附置裝飾性構造物設計範例彙編 - 互動法規檢討與試算系統</title>
+    <!-- Google Fonts: Inter & Noto Sans TC -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0b0f19;
+            --bg-secondary: #111827;
+            --bg-card: rgba(17, 24, 39, 0.75);
+            --bg-card-hover: rgba(31, 41, 55, 0.85);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --border-accent: rgba(6, 182, 212, 0.4);
+            
+            --text-primary: #f9fafb;
+            --text-secondary: #9ca3af;
+            --text-muted: #6b7280;
+            
+            --accent-cyan: #06b6d4;
+            --accent-cyan-glow: rgba(6, 182, 212, 0.25);
+            --accent-emerald: #10b981;
+            --accent-emerald-glow: rgba(16, 185, 129, 0.2);
+            --accent-amber: #f59e0b;
+            --accent-rose: #ef4444;
+            --accent-indigo: #6366f1;
+            
+            --radius-lg: 16px;
+            --radius-md: 10px;
+            --radius-sm: 6px;
+            --shadow-glow: 0 0 25px rgba(6, 182, 212, 0.15);
+            --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Noto Sans TC', 'Inter', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(6, 182, 212, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 85% 85%, rgba(99, 102, 241, 0.08) 0%, transparent 40%);
+            background-attachment: fixed;
+        }
+
+        /* Container & Layout */
+        .app-header {
+            border-bottom: 1px solid var(--border-color);
+            background: rgba(11, 15, 25, 0.85);
+            backdrop-filter: blur(16px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-inner {
+            max-width: 1320px;
+            margin: 0 auto;
+            padding: 1.25rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .brand-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .brand-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-indigo));
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 1.2rem;
+            color: white;
+            box-shadow: 0 4px 12px rgba(6, 182, 212, 0.3);
+        }
+
+        .brand-text h1 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            background: linear-gradient(90deg, #ffffff, #d1d5db);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .brand-text p {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .version-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid var(--border-accent);
+            padding: 0.35rem 0.85rem;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            color: var(--accent-cyan);
+            font-weight: 500;
+        }
+
+        .version-badge span.pulse-dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent-cyan);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--accent-cyan);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+
+        .main-container {
+            max-width: 1320px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 1024px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .nav-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 1.25rem;
+            backdrop-filter: blur(12px);
+        }
+
+        .nav-title {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .nav-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+        }
+
+        .nav-item button {
+            width: 100%;
+            text-align: left;
+            padding: 0.75rem 1rem;
+            background: transparent;
+            border: 1px solid transparent;
+            border-radius: var(--radius-md);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-item button:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+        }
+
+        .nav-item button.active {
+            background: rgba(6, 182, 212, 0.12);
+            border-color: var(--border-accent);
+            color: var(--accent-cyan);
+            font-weight: 600;
+        }
+
+        .nav-item .tag {
+            font-size: 0.7rem;
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-muted);
+        }
+
+        .nav-item button.active .tag {
+            background: var(--accent-cyan);
+            color: var(--bg-primary);
+            font-weight: 700;
+        }
+
+        /* Content Area */
+        .content-area {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .tab-panel {
+            display: none;
+            flex-direction: column;
+            gap: 1.5rem;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-panel.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 1.75rem;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            transition: var(--transition-fast);
+        }
+
+        .section-card:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.25rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .card-title-icon {
+            color: var(--accent-cyan);
+        }
+
+        /* Calculator UI */
+        .calc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            background: rgba(0, 0, 0, 0.25);
+            padding: 1rem;
+            border-radius: var(--radius-md);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .input-group label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .input-group label .val-display {
+            color: var(--accent-cyan);
+            font-weight: 700;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .input-group input[type="number"],
+        .input-group select {
+            width: 100%;
+            padding: 0.6rem 0.8rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            color: white;
+            font-size: 0.95rem;
+            outline: none;
+            transition: var(--transition-fast);
+        }
+
+        .input-group input[type="number"]:focus,
+        .input-group select:focus {
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 0 3px var(--accent-cyan-glow);
+        }
+
+        .input-group input[type="range"] {
+            width: 100%;
+            accent-color: var(--accent-cyan);
+            cursor: pointer;
+        }
+
+        /* Result Banner */
+        .result-banner {
+            padding: 1.25rem;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            transition: var(--transition-fast);
+            border: 1px solid transparent;
+        }
+
+        .result-banner.pass {
+            background: var(--accent-emerald-glow);
+            border-color: rgba(16, 185, 129, 0.4);
+        }
+
+        .result-banner.fail {
+            background: rgba(239, 68, 68, 0.15);
+            border-color: rgba(239, 68, 68, 0.4);
+        }
+
+        .result-banner.warn {
+            background: rgba(245, 158, 11, 0.15);
+            border-color: rgba(245, 158, 11, 0.4);
+        }
+
+        .result-icon {
+            font-size: 1.5rem;
+            line-height: 1;
+        }
+
+        .result-details h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .result-banner.pass h4 { color: var(--accent-emerald); }
+        .result-banner.fail h4 { color: var(--accent-rose); }
+        .result-banner.warn h4 { color: var(--accent-amber); }
+
+        .result-details p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .result-details ul {
+            margin-top: 0.5rem;
+            padding-left: 1.25rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* Diagrams & Visual Canvas */
+        .diagram-container {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            min-height: 240px;
+        }
+
+        .svg-diagram {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Rule Cards Grid */
+        .rules-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+
+        .rule-pill {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: var(--radius-md);
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .rule-pill .badge {
+            align-self: flex-start;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .badge.mandatory { background: rgba(239, 68, 68, 0.2); color: #fca5a5; }
+        .badge.ratio { background: rgba(6, 182, 212, 0.2); color: #67e8f9; }
+        .badge.exemption { background: rgba(16, 185, 129, 0.2); color: #6ee7b7; }
+        .badge.inclusion { background: rgba(245, 158, 11, 0.2); color: #fde047; }
+
+        .rule-pill h5 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .rule-pill p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* Audit Checklist Tab */
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 0.85rem 1rem;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-md);
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .checklist-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .checklist-item input[type="checkbox"] {
+            margin-top: 0.2rem;
+            accent-color: var(--accent-cyan);
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .checklist-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .checklist-text .title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .checklist-text .desc {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-indigo));
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition-fast);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 14px rgba(6, 182, 212, 0.3);
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .action-bar {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="app-header">
+        <div class="header-inner">
+            <div class="brand-title">
+                <div class="brand-icon">臺</div>
+                <div class="brand-text">
+                    <h1>臺北市建築物附置裝飾性構造物檢討系統</h1>
+                    <p>依據臺北市政府 113.09.24 北市都授建字第1136163958號函發布（113.09.25實施最新版）</p>
+                </div>
+            </div>
+            <div class="version-badge">
+                <span class="pulse-dot"></span>
+                現行最新實施規範（函釋第045號第016號）
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="main-container">
+
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="nav-card">
+                <div class="nav-title">檢討項目分類</div>
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <button class="active" onclick="switchTab('balcony')">
+                            <span>一、陽台裝飾物</span>
+                            <span class="tag">試算</span>
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button onclick="switchTab('terrace')">
+                            <span>二、露台裝飾物</span>
+                            <span class="tag">試算</span>
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button onclick="switchTab('canopy')">
+                            <span>三、雨遮裝飾物</span>
+                            <span class="tag">試算</span>
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button onclick="switchTab('facade')">
+                            <span>四、外牆飾板與格柵</span>
+                            <span class="tag">試算</span>
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button onclick="switchTab('columns')">
+                            <span>五、裝飾柱與過樑</span>
+                            <span class="tag">條文</span>
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button onclick="switchTab('roof')">
+                            <span>六、屋頂突出物與夜照明</span>
+                            <span class="tag">條文</span>
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button onclick="switchTab('entrance')">
+                            <span>七、出入口造型框架</span>
+                            <span class="tag">試算</span>
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button onclick="switchTab('prereview')">
+                            <span>八、預審與除外規定</span>
+                            <span class="tag">機制</span>
+                        </button>
+                    </li>
+                    <li class="nav-item">
+                        <button onclick="switchTab('checklist')">
+                            <span>📋 抽查自主檢查表</span>
+                            <span class="tag">匯出</span>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="content-area">
+
+            <!-- TAB 1: BALCONY -->
+            <div id="tab-balcony" class="tab-panel active">
+                <div class="section-card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span class="card-title-icon">🏛️</span> 陽台附置裝飾性構造物法規檢討
+                        </div>
+                    </div>
+                    <p style="color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.9rem;">
+                        檢討陽台開口透空率（需 $\ge 2/3$）、緊急開口規格（寬 $\ge 75\text{cm}$, 高 $\ge 120\text{cm}$ 或圓孔 $\varnothing \ge 100\text{cm}$）、L型陽台飾柱寬度比（$\le 1/3$）及外緣遮陽板超過 2m 計入建築面積與容積。
+                    </p>
+
+                    <!-- Interactive Inputs -->
+                    <div class="calc-grid">
+                        <div class="input-group">
+                            <label>陽台正面長度 L (公尺) <span class="val-display" id="balcony-L-val">4.0 m</span></label>
+                            <input type="range" id="balcony-L" min="1" max="10" step="0.1" value="4.0" oninput="calcBalcony()">
+                        </div>
+                        <div class="input-group">
+                            <label>陽台開口高度 h (公尺，不含欄杆) <span class="val-display" id="balcony-h-val">1.8 m</span></label>
+                            <input type="range" id="balcony-h" min="0.8" max="3.5" step="0.1" value="1.8" oninput="calcBalcony()">
+                        </div>
+                        <div class="input-group">
+                            <label>裝飾柱/板遮蔽寬度 (公尺) <span class="val-display" id="balcony-w-val">0.8 m</span></label>
+                            <input type="range" id="balcony-w" min="0" max="3" step="0.1" value="0.8" oninput="calcBalcony()">
+                        </div>
+                        <div class="input-group">
+                            <label>緊急開口寬度 (公分) <span class="val-display" id="balcony-ew-val">80 cm</span></label>
+                            <input type="number" id="balcony-ew" value="80" oninput="calcBalcony()">
+                        </div>
+                        <div class="input-group">
+                            <label>緊急開口高度 (公分) <span class="val-display" id="balcony-eh-val">120 cm</span></label>
+                            <input type="number" id="balcony-eh" value="120" oninput="calcBalcony()">
+                        </div>
+                        <div class="input-group">
+                            <label>陽台+外緣遮陽板合計深度 (公尺) <span class="val-display" id="balcony-d-val">2.3 m</span></label>
+                            <input type="range" id="balcony-d" min="1.0" max="4.0" step="0.1" value="2.3" oninput="calcBalcony()">
+                        </div>
+                    </div>
+
+                    <!-- Visual Diagram SVG -->
+                    <div class="diagram-container">
+                        <svg class="svg-diagram" width="480" height="180" viewBox="0 0 480 180">
+                            <!-- Outer Frame -->
+                            <rect x="20" y="20" width="440" height="130" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="2" stroke-dasharray="4"/>
+                            <!-- Balcony Opening Area -->
+                            <rect id="svg-balcony-bg" x="25" y="25" width="430" height="120" fill="rgba(6,182,212,0.15)" stroke="var(--accent-cyan)" stroke-width="1.5"/>
+                            <!-- Decorative Element Overlay -->
+                            <rect id="svg-balcony-dec" x="25" y="25" width="90" height="120" fill="rgba(239,68,68,0.4)" stroke="var(--accent-rose)" stroke-width="1.5"/>
+                            <!-- Emergency Opening Box -->
+                            <rect id="svg-balcony-em" x="250" y="35" width="60" height="90" fill="rgba(16,185,129,0.3)" stroke="var(--accent-emerald)" stroke-width="2"/>
+                            <!-- Labels -->
+                            <text x="240" y="165" fill="#9ca3af" font-size="12" text-anchor="middle">陽台正面長度 L</text>
+                            <text x="12" y="85" fill="#9ca3af" font-size="12" text-anchor="middle" transform="rotate(-90 12,85)">開口高 h</text>
+                            <text x="70" y="85" fill="#ffffff" font-size="11" text-anchor="middle">裝飾構件</text>
+                            <text x="280" y="85" fill="#ffffff" font-size="11" text-anchor="middle">緊急開口</text>
+                        </svg>
+                    </div>
+
+                    <!-- Dynamic Result Banner -->
+                    <div id="balcony-result" class="result-banner pass" style="margin-top: 1.5rem;">
+                        <div class="result-icon">✅</div>
+                        <div class="result-details">
+                            <h4 id="balcony-status-title">符合陽台裝飾性構造物免計與設置標準</h4>
+                            <p id="balcony-status-desc">計算透空率為 80.0% (符合 $\ge 66.7\%$ 要求)。緊急開口規格合格。</p>
+                            <ul id="balcony-status-list"></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: TERRACE -->
+            <div id="tab-terrace" class="tab-panel">
+                <div class="section-card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span class="card-title-icon">🏞️</span> 露台附置裝飾性構造物法規檢討
+                        </div>
+                    </div>
+                    <p style="color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.9rem;">
+                        露台裝飾構造物高度以當層為限，扣除欄杆後透空率應達 $1/2$ 以上。自欄杆中心線向內延伸不得超過 50 公分 ($D_1 \le 50\text{cm}$)，向外延伸不得超過 1 公尺 ($D_2 \le 1.0\text{m}$)。
+                    </p>
+
+                    <div class="calc-grid">
+                        <div class="input-group">
+                            <label>自欄杆中心線向內延伸 D1 (公分) <span class="val-display" id="terrace-d1-val">40 cm</span></label>
+                            <input type="range" id="terrace-d1" min="0" max="100" step="5" value="40" oninput="calcTerrace()">
+                        </div>
+                        <div class="input-group">
+                            <label>自欄杆中心線向外延伸 D2 (公分) <span class="val-display" id="terrace-d2-val">80 cm</span></label>
+                            <input type="range" id="terrace-d2" min="0" max="200" step="5" value="80" oninput="calcTerrace()">
+                        </div>
+                        <div class="input-group">
+                            <label>扣除欄杆後剩餘面積透空率 (%) <span class="val-display" id="terrace-por-val">60 %</span></label>
+                            <input type="range" id="terrace-por" min="10" max="100" step="5" value="60" oninput="calcTerrace()">
+                        </div>
+                    </div>
+
+                    <div id="terrace-result" class="result-banner pass">
+                        <div class="result-icon">✅</div>
+                        <div class="result-details">
+                            <h4 id="terrace-status-title">露台裝飾物合格</h4>
+                            <p id="terrace-status-desc">延伸尺寸與透空率均符合規範。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3: CANOPY -->
+            <div id="tab-canopy" class="tab-panel">
+                <div class="section-card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span class="card-title-icon">☂️</span> 雨遮附置裝飾性構造物檢討
+                        </div>
+                    </div>
+                    <p style="color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.9rem;">
+                        雨遮深度不得超過 1 公尺，外緣裝飾欄杆高度上限 90 公分，格柵透空率需 $\ge 2/3$，並須留設緊急進口。當層建築物外牆窗台高度需 $> 1.2\text{m}$ 或設置固定窗。
+                    </p>
+
+                    <div class="calc-grid">
+                        <div class="input-group">
+                            <label>雨遮深度 (公尺) <span class="val-display" id="canopy-depth-val">0.9 m</span></label>
+                            <input type="range" id="canopy-depth" min="0.3" max="2.0" step="0.1" value="0.9" oninput="calcCanopy()">
+                        </div>
+                        <div class="input-group">
+                            <label>裝飾欄杆高度 (公分) <span class="val-display" id="canopy-rh-val">85 cm</span></label>
+                            <input type="number" id="canopy-rh" value="85" oninput="calcCanopy()">
+                        </div>
+                        <div class="input-group">
+                            <label>格柵透空率 (%) <span class="val-display" id="canopy-por-val">70 %</span></label>
+                            <input type="range" id="canopy-por" min="20" max="100" step="5" value="70" oninput="calcCanopy()">
+                        </div>
+                        <div class="input-group">
+                            <label>當層窗台高度 (公尺) <span class="val-display" id="canopy-sill-val">1.3 m</span></label>
+                            <input type="range" id="canopy-sill" min="0.5" max="2.0" step="0.1" value="1.3" oninput="calcCanopy()">
+                        </div>
+                    </div>
+
+                    <div id="canopy-result" class="result-banner pass">
+                        <div class="result-icon">✅</div>
+                        <div class="result-details">
+                            <h4 id="canopy-status-title">雨遮裝飾物合格</h4>
+                            <p id="canopy-status-desc">深度在 1.0m 限制內，欄杆高度與窗台高度均符規定。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 4: FACADE -->
+            <div id="tab-facade" class="tab-panel">
+                <div class="section-card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span class="card-title-icon">🏢</span> 外牆飾板與包覆式格柵檢討
+                        </div>
+                    </div>
+                    <p style="color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.9rem;">
+                        檢討外牆裝飾水平/垂直飾板與包覆式格柵之投影面積與建築面積計入規定。
+                    </p>
+
+                    <div class="calc-grid">
+                        <div class="input-group">
+                            <label>構造類型</label>
+                            <select id="facade-type" onchange="calcFacade()">
+                                <option value="fin">外牆水平/垂直飾板 (Fin/Plate)</option>
+                                <option value="louver">包覆式裝飾性格柵 (Perforated/Louver)</option>
+                                <option value="solid">實心裝飾柱/版 (Solid Column/Panel)</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label>距外牆中心線突出距離 (公尺) <span class="val-display" id="facade-proj-val">0.8 m</span></label>
+                            <input type="range" id="facade-proj" min="0.1" max="3.0" step="0.1" value="0.8" oninput="calcFacade()">
+                        </div>
+                        <div class="input-group">
+                            <label>透空率 (%) <span class="val-display" id="facade-por-val">75 %</span></label>
+                            <input type="range" id="facade-por" min="10" max="100" step="5" value="75" oninput="calcFacade()">
+                        </div>
+                    </div>
+
+                    <div id="facade-result" class="result-banner pass">
+                        <div class="result-icon">✅</div>
+                        <div class="result-details">
+                            <h4 id="facade-status-title">外牆飾板免計建築面積</h4>
+                            <p id="facade-status-desc">突出距離在 1.0 公尺以下，免計入建築面積。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 5: COLUMNS -->
+            <div id="tab-columns" class="tab-panel">
+                <div class="section-card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span class="card-title-icon">🏛️</span> 裝飾柱與結構過樑檢討條文
+                        </div>
+                    </div>
+                    <div class="rules-list">
+                        <div class="rule-pill">
+                            <span class="badge exemption">免計樓地板</span>
+                            <h5>實心裝飾柱/版寬度與淨距</h5>
+                            <p>外牆設置裝飾柱、版，寬度小於 1.5 公尺且內部填實者，得不計入樓地板面積。連續設置者淨間距不得小於 1.5 公尺。</p>
+                        </div>
+                        <div class="rule-pill">
+                            <span class="badge mandatory">禁設開口</span>
+                            <h5>結構柱兩側裝飾柱</h5>
+                            <p>若於結構柱兩側設置裝飾柱，扣除結構柱寬厚後，裝飾柱合計寬度不得超過 1.5 公尺，且不得設置開口。</p>
+                        </div>
+                        <div class="rule-pill">
+                            <span class="badge inclusion">計入建築面積</span>
+                            <h5>結構性過樑附設裝飾物</h5>
+                            <p>過樑外緣附設裝飾物突出不得超過 10 公分，透空率應達 2/3 以上，應計入建築面積並受高度比與後院深度比限制。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 6: ROOF -->
+            <div id="tab-roof" class="tab-panel">
+                <div class="section-card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span class="card-title-icon">🌇</span> 屋頂突出物與夜間照明規範
+                        </div>
+                    </div>
+                    <div class="rules-list">
+                        <div class="rule-pill">
+                            <span class="badge exemption">不計屋突高度面積</span>
+                            <h5>夜間照明系統 (高度 $\le 2\text{m}$)</h5>
+                            <p>屋頂層（含屋突）設置高度 2 公尺以下之燈箱或燈具，比照建築技術規則第1條第10項第3款「露天機電設備」檢討，免計屋突面積與高度。</p>
+                        </div>
+                        <div class="rule-pill">
+                            <span class="badge exemption">不計屋突 1/8</span>
+                            <h5>屋突水平突出 $\le 50\text{cm}$</h5>
+                            <p>屋頂突出物設置自牆心水平突出不超過 50 公分之裝飾構造，得不計入屋突 1/8 投影面積限制。</p>
+                        </div>
+                        <div class="rule-pill">
+                            <span class="badge inclusion">地面投影檢討</span>
+                            <h5>屋突裝飾構造 $> 50\text{cm}$</h5>
+                            <p>最外緣扣除 50 公分作為中心線檢討屋突面積；若有直接投影至地面者，應以相同中心線計入建築面積受高度比限制。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 7: ENTRANCE -->
+            <div id="tab-entrance" class="tab-panel">
+                <div class="section-card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span class="card-title-icon">🚪</span> 主要出入口雨遮與造型框架試算
+                        </div>
+                    </div>
+                    <p style="color: var(--text-secondary); margin-bottom: 1.5rem; font-size: 0.9rem;">
+                        一樓主要出入口左右得設置 2m 以下雨遮。造型框架圍塑面積需 $< 30\%$ 建築面積（設計建蔽率），透空率需 $\ge 2/3$ 且**不得加設頂蓋**。
+                    </p>
+
+                    <div class="calc-grid">
+                        <div class="input-group">
+                            <label>造型框架圍塑面積 (㎡) <span class="val-display" id="ent-area-val">45 ㎡</span></label>
+                            <input type="number" id="ent-area" value="45" oninput="calcEntrance()">
+                        </div>
+                        <div class="input-group">
+                            <label>設計建蔽率建築面積 (㎡) <span class="val-display" id="ent-bldg-val">200 ㎡</span></label>
+                            <input type="number" id="ent-bldg" value="200" oninput="calcEntrance()">
+                        </div>
+                        <div class="input-group">
+                            <label>框架透空率 (%) <span class="val-display" id="ent-por-val">70 %</span></label>
+                            <input type="range" id="ent-por" min="20" max="100" step="5" value="70" oninput="calcEntrance()">
+                        </div>
+                    </div>
+
+                    <div id="entrance-result" class="result-banner pass">
+                        <div class="result-icon">✅</div>
+                        <div class="result-details">
+                            <h4 id="entrance-status-title">出入口造型框架合格</h4>
+                            <p id="entrance-status-desc">圍塑面積比例為 22.5% (小於 30% 上限)，透空率 70% 符合規定。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 8: PREREVIEW -->
+            <div id="tab-prereview" class="tab-panel">
+                <div class="section-card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span class="card-title-icon">⚖️</span> 建造執照預審小組特殊除外機制
+                        </div>
+                    </div>
+                    <p style="color: var(--text-secondary); line-height: 1.8;">
+                        依據本彙編第十點規定：<br>
+                        <strong>「建築物因用途機能、構造特殊或環境景觀需求，適用本彙編確有困難者，得經本市建造執照預審小組審議通過，不適用本彙編一部或全部之規定。」</strong>
+                    </p>
+                    <div style="margin-top: 1.5rem; background: rgba(6, 182, 212, 0.08); border: 1px solid var(--border-accent); padding: 1.25rem; border-radius: var(--radius-md);">
+                        <h5 style="color: var(--accent-cyan); margin-bottom: 0.5rem;">📌 實務申請建議：</h5>
+                        <ul style="color: var(--text-secondary); font-size: 0.9rem; padding-left: 1.25rem;">
+                            <li>若設計具特殊造型意象或都市景觀貢獻，無法符合透空率 $2/3$ 或延伸長度限制時，應提送「臺北市建造執照預審小組」。</li>
+                            <li>需準備都市景觀影響評估、結構安全無虞說明及維護管理切結計畫。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 9: CHECKLIST -->
+            <div id="tab-checklist" class="tab-panel">
+                <div class="section-card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <span class="card-title-icon">📋</span> 建築執照抽查自主檢查表
+                        </div>
+                    </div>
+
+                    <div class="checklist-item">
+                        <input type="checkbox" id="c1" checked>
+                        <div class="checklist-text">
+                            <span class="title">1. 材質非燃性確認</span>
+                            <span class="desc">所有附置於建築物外緣之裝飾性框架、飾條、格柵均採用不燃材料。</span>
+                        </div>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="c2" checked>
+                        <div class="checklist-text">
+                            <span class="title">2. 陽台開口透空率與緊急開口</span>
+                            <span class="desc">陽台透空率達 2/3 以上，各戶已至少留設一處無遮蔽緊急開口（W≥75cm, H≥120cm 或 ∅≥100cm）。</span>
+                        </div>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="c3" checked>
+                        <div class="checklist-text">
+                            <span class="title">3. 陽台遮陽板與深陽台面積計入</span>
+                            <span class="desc">陽台+遮陽板合計深度超過 2 公尺部分，已併入建築面積與容積樓地板面積檢討。</span>
+                        </div>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="c4" checked>
+                        <div class="checklist-text">
+                            <span class="title">4. 露台裝飾物高度與延伸限制</span>
+                            <span class="desc">露台裝飾物限當層高，扣除欄杆透空率≥1/2，內延伸≤50cm，外延伸≤1.0m。</span>
+                        </div>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="c5" checked>
+                        <div class="checklist-text">
+                            <span class="title">5. 外牆飾板免計建築面積檢討</span>
+                            <span class="desc">飾板距外牆中心線在 1.0 公尺以下（免計建築面積），超過 1.0m 至 2.0m 部分已計入建築面積。</span>
+                        </div>
+                    </div>
+                    <div class="checklist-item">
+                        <input type="checkbox" id="c6" checked>
+                        <div class="checklist-text">
+                            <span class="title">6. 出入口造型框架切結與產權交代</span>
+                            <span class="desc">造型框架圍塑面積<30%建蔽率面積，透空率≥2/3，起造人已簽署無頂蓋切結書並列入規約。</span>
+                        </div>
+                    </div>
+
+                    <div class="action-bar">
+                        <button class="btn-secondary" onclick="resetChecklist()">重置檢查表</button>
+                        <button class="btn-primary" onclick="copyChecklistReport()">複製檢查結果摘要</button>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- JavaScript Logic -->
+    <script>
+        function switchTab(tabId) {
+            document.querySelectorAll('.nav-item button').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
+
+            event.currentTarget.classList.add('active');
+            const targetPanel = document.getElementById('tab-' + tabId);
+            if (targetPanel) {
+                targetPanel.classList.add('active');
+            }
+        }
+
+        // Balcony Calc
+        function calcBalcony() {
+            const L = parseFloat(document.getElementById('balcony-L').value);
+            const h = parseFloat(document.getElementById('balcony-h').value);
+            const w = parseFloat(document.getElementById('balcony-w').value);
+            const ew = parseFloat(document.getElementById('balcony-ew').value);
+            const eh = parseFloat(document.getElementById('balcony-eh').value);
+            const d = parseFloat(document.getElementById('balcony-d').value);
+
+            document.getElementById('balcony-L-val').innerText = L.toFixed(1) + ' m';
+            document.getElementById('balcony-h-val').innerText = h.toFixed(1) + ' m';
+            document.getElementById('balcony-w-val').innerText = w.toFixed(1) + ' m';
+            document.getElementById('balcony-ew-val').innerText = ew + ' cm';
+            document.getElementById('balcony-eh-val').innerText = eh + ' cm';
+            document.getElementById('balcony-d-val').innerText = d.toFixed(1) + ' m';
+
+            // SVG Update
+            const totalWidth = 430;
+            const decWidth = Math.min(totalWidth * 0.8, (w / L) * totalWidth);
+            document.getElementById('svg-balcony-dec').setAttribute('width', decWidth);
+
+            const porRatio = ((L - w) / L) * 100;
+            const emPass = (ew >= 75 && eh >= 120);
+            const depthWarn = d > 2.0;
+
+            const resBanner = document.getElementById('balcony-result');
+            const title = document.getElementById('balcony-status-title');
+            const desc = document.getElementById('balcony-status-desc');
+            const list = document.getElementById('balcony-status-list');
+            list.innerHTML = '';
+
+            let pass = true;
+            let warnMessages = [];
+
+            if (porRatio < 66.67) {
+                pass = false;
+                warnMessages.push(`❌ 開口透空率僅 ${porRatio.toFixed(1)}% (未達三分之二 66.7% 要求)。`);
+            } else {
+                warnMessages.push(`✅ 開口透空率為 ${porRatio.toFixed(1)}% (符合 $\\ge 66.7\\%$ 要求)。`);
+            }
+
+            if (!emPass) {
+                pass = false;
+                warnMessages.push(`❌ 緊急開口尺寸未達標 (需要 寬$\\ge 75\\text{cm}$, 高$\\ge 120\\text{cm}$)。`);
+            } else {
+                warnMessages.push(`✅ 緊急開口尺寸合規 (${ew}x${eh} cm)。`);
+            }
+
+            if (depthWarn) {
+                const extra = (d - 2.0).toFixed(2);
+                warnMessages.push(`⚠️ 陽台+遮陽板總深度 ${d}m 超過 2.0m，超出之 ${extra}m 部分**必須計入建築面積及容積樓地板面積**。`);
+            }
+
+            if (pass) {
+                resBanner.className = depthWarn ? 'result-banner warn' : 'result-banner pass';
+                title.innerText = depthWarn ? '符合裝飾物規範（惟部分深度需計入容積）' : '✅ 完全符合陽台裝飾物免計規範';
+            } else {
+                resBanner.className = 'result-banner fail';
+                title.innerText = '❌ 陽台裝飾性構造物未符合法規要求';
+            }
+
+            warnMessages.forEach(msg => {
+                const li = document.createElement('li');
+                li.innerHTML = msg;
+                list.appendChild(li);
+            });
+        }
+
+        // Terrace Calc
+        function calcTerrace() {
+            const d1 = parseInt(document.getElementById('terrace-d1').value);
+            const d2 = parseInt(document.getElementById('terrace-d2').value);
+            const por = parseInt(document.getElementById('terrace-por').value);
+
+            document.getElementById('terrace-d1-val').innerText = d1 + ' cm';
+            document.getElementById('terrace-d2-val').innerText = d2 + ' cm';
+            document.getElementById('terrace-por-val').innerText = por + ' %';
+
+            const resBanner = document.getElementById('terrace-result');
+            const title = document.getElementById('terrace-status-title');
+            const desc = document.getElementById('terrace-status-desc');
+
+            let ok = (d1 <= 50) && (d2 <= 100) && (por >= 50);
+
+            if (ok) {
+                resBanner.className = 'result-banner pass';
+                title.innerText = '✅ 露台裝飾物檢討合格';
+                desc.innerText = `向內延伸 ${d1}cm (≤50cm)、向外延伸 ${d2}cm (≤100cm)、透空率 ${por}% (≥50%)。`;
+            } else {
+                resBanner.className = 'result-banner fail';
+                title.innerText = '❌ 露台裝飾物違規';
+                let errs = [];
+                if (d1 > 50) errs.push(`向內延伸 ${d1}cm 超過 50cm 上限`);
+                if (d2 > 100) errs.push(`向外延伸 ${d2}cm 超過 100cm 上限`);
+                if (por < 50) errs.push(`透空率 ${por}% 低於 50% 門檻`);
+                desc.innerText = errs.join('；');
+            }
+        }
+
+        // Canopy Calc
+        function calcCanopy() {
+            const depth = parseFloat(document.getElementById('canopy-depth').value);
+            const rh = parseInt(document.getElementById('canopy-rh').value);
+            const por = parseInt(document.getElementById('canopy-por').value);
+            const sill = parseFloat(document.getElementById('canopy-sill').value);
+
+            document.getElementById('canopy-depth-val').innerText = depth.toFixed(1) + ' m';
+            document.getElementById('canopy-rh-val').innerText = rh + ' cm';
+            document.getElementById('canopy-por-val').innerText = por + ' %';
+            document.getElementById('canopy-sill-val').innerText = sill.toFixed(1) + ' m';
+
+            const resBanner = document.getElementById('canopy-result');
+            const title = document.getElementById('canopy-status-title');
+            const desc = document.getElementById('canopy-status-desc');
+
+            let ok = (depth <= 1.0) && (rh <= 90) && (por >= 66.67) && (sill >= 1.2);
+
+            if (ok) {
+                resBanner.className = 'result-banner pass';
+                title.innerText = '✅ 雨遮裝飾物合格';
+                desc.innerText = `深度 ${depth}m (≤1.0m)、欄杆高 ${rh}cm (≤90cm)、窗台高 ${sill}m (≥1.2m)。`;
+            } else {
+                resBanner.className = 'result-banner fail';
+                title.innerText = '❌ 雨遮裝飾物不合格';
+                let errs = [];
+                if (depth > 1.0) errs.push(`雨遮深度 ${depth}m 超過 1.0m 限制`);
+                if (rh > 90) errs.push(`欄杆高度 ${rh}cm 超過 90cm 限制`);
+                if (por < 66.67) errs.push(`格柵透空率 ${por}% 低於 2/3`);
+                if (sill < 1.2) errs.push(`當層窗台高度 ${sill}m 低於 1.2m 限制`);
+                desc.innerText = errs.join('；');
+            }
+        }
+
+        // Facade Calc
+        function calcFacade() {
+            const type = document.getElementById('facade-type').value;
+            const proj = parseFloat(document.getElementById('facade-proj').value);
+            const por = parseInt(document.getElementById('facade-por').value);
+
+            document.getElementById('facade-proj-val').innerText = proj.toFixed(1) + ' m';
+            document.getElementById('facade-por-val').innerText = por + ' %';
+
+            const resBanner = document.getElementById('facade-result');
+            const title = document.getElementById('facade-status-title');
+            const desc = document.getElementById('facade-status-desc');
+
+            if (type === 'fin') {
+                if (proj <= 1.0) {
+                    resBanner.className = 'result-banner pass';
+                    title.innerText = '✅ 免計建築面積';
+                    desc.innerText = `飾板突出距離 ${proj}m ≤ 1.0m，不計入建築面積。`;
+                } else if (proj <= 2.0) {
+                    resBanner.className = 'result-banner warn';
+                    title.innerText = '⚠️ 應計入建築面積及高度比限制';
+                    desc.innerText = `飾板突出距離 ${proj}m > 1.0m 且 ≤ 2.0m，該投影面積應計入建築面積受高度比/後院比限制。`;
+                } else {
+                    resBanner.className = 'result-banner fail';
+                    title.innerText = '❌ 突出距離違規';
+                    desc.innerText = `飾板突出距離 ${proj}m 超過外牆中心線 2.0m 最大限制！`;
+                }
+            } else if (type === 'louver') {
+                if (proj <= 2.0 && por >= 66.67) {
+                    resBanner.className = 'result-banner warn';
+                    title.innerText = '⚠️ 合格包覆式格柵（應計入建築面積）';
+                    desc.innerText = `透空率 ${por}% ≥ 2/3，投影面積需計入建築面積及受高度比限制。`;
+                } else {
+                    resBanner.className = 'result-banner fail';
+                    title.innerText = '❌ 包覆式格柵違規';
+                    desc.innerText = `突出超過 2.0m 或透空率低於 2/3。`;
+                }
+            } else {
+                resBanner.className = 'result-banner pass';
+                title.innerText = 'ℹ️ 實心裝飾柱檢討提示';
+                desc.innerText = `裝飾柱寬度需 < 1.5m 且淨間距 ≥ 1.5m 始得免計樓地板面積。`;
+            }
+        }
+
+        // Entrance Calc
+        function calcEntrance() {
+            const area = parseFloat(document.getElementById('ent-area').value) || 0;
+            const bldg = parseFloat(document.getElementById('ent-bldg').value) || 1;
+            const por = parseInt(document.getElementById('ent-por').value);
+
+            document.getElementById('ent-area-val').innerText = area + ' ㎡';
+            document.getElementById('ent-bldg-val').innerText = bldg + ' ㎡';
+            document.getElementById('ent-por-val').innerText = por + ' %';
+
+            const ratio = (area / bldg) * 100;
+            const resBanner = document.getElementById('entrance-result');
+            const title = document.getElementById('entrance-status-title');
+            const desc = document.getElementById('entrance-status-desc');
+
+            if (ratio < 30 && por >= 66.67) {
+                resBanner.className = 'result-banner pass';
+                title.innerText = '✅ 出入口造型框架合格';
+                desc.innerText = `圍塑面積占比 ${ratio.toFixed(1)}% (< 30%)，透空率 ${por}% (≥ 66.7%)。需切結無頂蓋。`;
+            } else {
+                resBanner.className = 'result-banner fail';
+                title.innerText = '❌ 出入口造型框架違規';
+                desc.innerText = `圍塑面積占比 ${ratio.toFixed(1)}% (需 < 30%) 或透空率不足 2/3。`;
+            }
+        }
+
+        function resetChecklist() {
+            document.querySelectorAll('#tab-checklist input[type="checkbox"]').forEach(c => c.checked = true);
+        }
+
+        function copyChecklistReport() {
+            const items = document.querySelectorAll('.checklist-item');
+            let report = "【臺北市建築物附置裝飾性構造物自主檢查表】\n生成時間: " + new Date().toLocaleString('zh-TW') + "\n----------------------------------------\n";
+            items.forEach((item, index) => {
+                const chk = item.querySelector('input').checked;
+                const title = item.querySelector('.title').innerText;
+                report += `${chk ? '☑ [合格]' : '☒ [待補正]'} ${title}\n`;
+            });
+            report += "----------------------------------------\n依據113.09.24北市都授建字第1136163958號函範例彙編辦理。";
+            
+            navigator.clipboard.writeText(report).then(() => {
+                alert("已成功複製自主檢查報告摘要至剪貼簿！");
+            });
+        }
+
+        // Initialize Calcs
+        window.onload = function() {
+            calcBalcony();
+            calcTerrace();
+            calcCanopy();
+            calcFacade();
+            calcEntrance();
+        };
+    </script>
+</body>
+</html>
