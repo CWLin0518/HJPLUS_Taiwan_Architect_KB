@@ -87,6 +87,7 @@
 ---
 
 ## 相關法規與延伸技能
-- [高度比與面前道路認定](../../建築技術規則/建築設計施工編/高度比與面前道路認定/height-ratio-front-road-review/SKILL.md)
-- [容積免計實務陷阱](../../容積率與建蔽率計算/容積免計實務陷阱/floor-area-exemption-pitfalls/SKILL.md)
-- [陽臺梯廳回計容積計算](../../容積率與建蔽率計算/陽臺梯廳回計容積計算/balcony-lobby-far-recalculation/SKILL.md)
+- [高度比與面前道路認定](../../../建築技術規則/建築設計施工編/高度比與面前道路認定/height-ratio-front-road-review/SKILL.md)
+- [容積免計實務陷阱](../../../容積率與建蔽率計算/容積免計實務陷阱/floor-area-exemption-pitfalls/SKILL.md)
+- [陽臺梯廳回計容積計算](../../../容積率與建蔽率計算/陽臺梯廳回計容積計算/balcony-lobby-far-recalculation/SKILL.md)
+

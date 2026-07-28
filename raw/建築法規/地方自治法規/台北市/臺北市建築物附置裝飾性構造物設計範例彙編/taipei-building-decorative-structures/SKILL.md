@@ -8,7 +8,7 @@ metadata:
   region: taiwan
   class: C
   status: verified
-  data-currency: "2024-09-25"
+  data-currency: "2026-07-28"
 ---
 
 # Taipei City Building Attached Decorative Structures Review
@@ -114,7 +114,65 @@ If a project cannot comply with this compilation due to special functional needs
 
 ---
 
+## Worked Examples
+
+### Example 1: Balcony Decorative Sunshade & Column Review
+
+```text
+Inputs:
+  L_balcony = 6.0 m (Balcony length)
+  D_balcony = 1.5 m (Balcony depth)
+  D_sunshade = 0.8 m (Decorative sunshade projection beyond balcony outer edge)
+  Sunshade Porosity = 60% (3/5)
+  Emergency Opening = 80 cm (W) x 130 cm (H)
+  Decorative Column Width = 1.2 m
+
+Evaluation & Rules Applied:
+  1. Material: Non-combustible (Compliant).
+  2. Emergency Opening: 80 cm >= 75 cm AND 130 cm >= 120 cm (Compliant).
+  3. Decorative Column Width: 1.2 m <= (1/3)*6.0 m = 2.0 m (Compliant).
+  4. Sunshade Porosity: 60% >= 50% (Compliant per Section 1.5).
+  5. Combined Projection & Area Treatment:
+     Total Depth D_total = 1.5 m + 0.8 m = 2.3 m > 2.0 m.
+     Excess Depth = 2.3 m - 2.0 m = 0.3 m.
+     Excess Area to Include = 6.0 m x 0.3 m = 1.80 m²
+
+Result:
+  - Balcony Structure: PASS.
+  - Action Required: Include 1.80 m² in Building Area and Floor Area Ratio (FAR) calculation, and verify 3.6:1 height-slope restriction.
+```
+
+### Example 2: Exterior Wall Facade Vertical Solid Fins & Enclosing Louver Panel Review
+
+```text
+Inputs:
+  Wall Length = 12.0 m
+  Type A (Solid Vertical Fin):
+    Outward Projection = 0.8 m
+    Fin Solid Width = 0.4 m
+    Net Spacing between Fins = 1.8 m
+  Type B (Enclosing Louver Panel):
+    Outward Projection = 1.5 m
+    Louver Porosity = 70% (7/10)
+
+Evaluation & Rules Applied:
+  1. Type A Solid Fin:
+     Projection 0.8 m <= 1.0 m, Solid Width 0.4 m < 1.5 m, Net Spacing 1.8 m >= 1.5 m.
+     Rule: Projection <= 1.0 m and solid width < 1.5 m -> EXEMPT from Building Area.
+  2. Type B Enclosing Louver Panel:
+     Projection 1.5 m <= 2.0 m, Porosity 70% >= 2/3 (66.7%).
+     Rule: Projection > 1.0 m up to 2.0 m for enclosing louvers -> Projected Area INCLUDED in Building Area.
+     Projected Area to Include = 12.0 m x 1.5 m = 18.00 m²
+
+Result:
+  - Type A Fins: EXEMPT from Building Area & FAR.
+  - Type B Panel: PASS conditionally (Must include 18.00 m² in Building Area & verify Height/Rear Yard setback).
+```
+
+---
+
 ## Related Skills
-* [height-ratio-front-road-review](../../建築技術規則/建築設計施工編/高度比與面前道路認定/height-ratio-front-road-review/SKILL.md)
-* [floor-area-exemption-pitfalls](../../容積率與建蔽率計算/容積免計實務陷阱/floor-area-exemption-pitfalls/SKILL.md)
-* [balcony-lobby-far-recalculation](../../容積率與建蔽率計算/陽臺梯廳回計容積計算/balcony-lobby-far-recalculation/SKILL.md)
+* [height-ratio-front-road-review](../../../../建築技術規則/建築設計施工編/高度比與面前道路認定/height-ratio-front-road-review/SKILL.md)
+* [floor-area-exemption-pitfalls](../../../../容積率與建蔽率計算/容積免計實務陷阱/floor-area-exemption-pitfalls/SKILL.md)
+* [balcony-lobby-far-recalculation](../../../../容積率與建蔽率計算/陽臺梯廳回計容積計算/balcony-lobby-far-recalculation/SKILL.md)
+
