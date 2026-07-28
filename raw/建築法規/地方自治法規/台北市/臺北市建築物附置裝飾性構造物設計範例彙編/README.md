@@ -56,7 +56,9 @@
 ```
 
 * [domain.md](domain.md) — 適合建築師、法規審查人員閱讀的完整中文法規說明與細節。
+* [index.html](index.html) — 互動式動態試算網頁與 15 幅全套官方圖例展演系統。
 * [SKILL.md](taipei-building-decorative-structures/SKILL.md) — AI Agent 檢討本彙編之結構化評估規則與 Check List。
+
 
 ---
 

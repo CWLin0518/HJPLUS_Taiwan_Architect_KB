@@ -1,6 +1,6 @@
 ---
 name: taipei-building-decorative-structures
-description: "This skill should be used when reviewing building attached non-structural decorative elements (frames, beams, columns, panels, louvers, railings, canopy/balcony/terrace/facade decorative features) in Taipei City per the 2024 Taipei City Building Attached Decorative Structure Design Exemplar Compilation (臺北市建築物附置裝飾性構造物設計範例彙編, Effective 2024-09-25). Includes porosity, projection, emergency opening, building area, FAR exemption, and height-slope restriction review."
+description: "This skill should be used when reviewing Taipei City facade design (臺北市新建案立面檢討/外牆立面規畫), building attached non-structural decorative elements (外牆附置物/裝飾物/附屬物), frames, beams, columns, panels, louvers, railings, canopy/balcony/terrace/facade decorative features in Taipei City per the 2024 Taipei City Building Attached Decorative Structure Design Exemplar Compilation (臺北市建築物附置裝飾性構造物設計範例彙編, Effective 2024-09-25). Includes porosity, projection, emergency opening, building area, FAR exemption, and height-slope restriction review."
 license: CC-BY-SA-4.0
 compatibility: claude-code,opencode,agent-skills
 metadata:
@@ -21,7 +21,15 @@ Effective **September 25, 2024** (Doc No. 北市都授建字第 1136163958 號 /
 
 ---
 
+## Interactive Web Tool & Visualization (互動檢討網頁與全套圖例)
+
+When responding to queries regarding Taipei City facade design, building attached decorative structures, louvers, fins, or balcony/terrace regulations, **ALWAYS include the link to the interactive calculation webpage**:
+- **Interactive Calculation & Blueprint Webpage**: [臺北市建築物附置裝飾性構造物互動檢討與全套圖例系統](../index.html) (`../index.html`)
+
+---
+
 ## Scope & Non-Combustibility Requirement
+
 
 - **Definition**: Non-structural decorative frames, beams, columns, panels, railings, louvers/shutters attached to the exterior of buildings or miscellaneous structures.
 - **Material Mandate**: All decorative elements **MUST be constructed of non-combustible materials (不燃材料)**.
