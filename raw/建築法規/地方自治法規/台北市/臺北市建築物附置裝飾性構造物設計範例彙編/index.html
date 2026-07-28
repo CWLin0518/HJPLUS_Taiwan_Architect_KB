@@ -1827,21 +1827,21 @@
 
             if (porRatio < 66.67) {
                 pass = false;
-                warnMessages.push(`❌ 開口透空率僅 {porRatio.toFixed(1)}% (未達三分之二 66.7% 要求)。`);
+                warnMessages.push(`❌ 開口透空率僅 ${porRatio.toFixed(1)}% (未達 2/3 即 66.7% 要求)。`);
             } else {
-                warnMessages.push(`✅ 開口透空率為 {porRatio.toFixed(1)}% (符合 \≥ 66.7\% 要求)。`);
+                warnMessages.push(`✅ 開口透空率為 ${porRatio.toFixed(1)}% (符合 ≥ 66.7% 要求)。`);
             }
 
             if (!emPass) {
                 pass = false;
-                warnMessages.push(`❌ 緊急開口尺寸未達標 (需要 寬\≥ 75\cm, 高\≥ 120\cm)。`);
+                warnMessages.push(`❌ 緊急開口尺寸未達標 (要求：寬 ≥ 75 cm、高 ≥ 120 cm)。`);
             } else {
-                warnMessages.push(`✅ 緊急開口尺寸合規 ({ew}x{eh} cm)。`);
+                warnMessages.push(`✅ 緊急開口尺寸合規 (寬 ${ew} × 高 ${eh} cm)。`);
             }
 
             if (depthWarn) {
                 const extra = (d - 2.0).toFixed(2);
-                warnMessages.push(`⚠️ 陽台+遮陽板總深度 {d}m 超過 2.0m，超出之 {extra}m 部分**必須計入建築面積及容積樓地板面積**。`);
+                warnMessages.push(`⚠️ 陽台與遮陽板總深度為 ${d.toFixed(1)} 公尺 (超過 2.0 公尺限制)，超出之 ${extra} 公尺部分<strong>必須計入建築面積及容積樓地板面積</strong>。`);
             }
 
             if (pass) {
@@ -1878,14 +1878,14 @@
             if (ok) {
                 resBanner.className = 'result-banner pass';
                 title.innerText = '✅ 露台裝飾物檢討合格';
-                desc.innerText = `向內延伸 {d1}cm (≤ 50 公分)、向外延伸 {d2}cm (≤100cm)、透空率 {por}% (≥50%)。`;
+                desc.innerText = `向內延伸 ${d1} 公分 (≤ 50 公分)、向外延伸 ${d2} 公分 (≤ 100 公分)、透空率 ${por}% (≥ 50%)。`;
             } else {
                 resBanner.className = 'result-banner fail';
                 title.innerText = '❌ 露台裝飾物違規';
                 let errs = [];
-                if (d1 > 50) errs.push(`向內延伸 {d1}cm 超過 50cm 上限`);
-                if (d2 > 100) errs.push(`向外延伸 {d2}cm 超過 100cm 上限`);
-                if (por < 50) errs.push(`透空率 {por}% 低於 50% 門檻`);
+                if (d1 > 50) errs.push(`向內延伸 ${d1} 公分 (超過 50 公分上限)`);
+                if (d2 > 100) errs.push(`向外延伸 ${d2} 公分 (超過 100 公分上限)`);
+                if (por < 50) errs.push(`透空率 ${por}% (低於 50% 門檻)`);
                 desc.innerText = errs.join('；');
             }
         }
@@ -1911,15 +1911,15 @@
             if (ok) {
                 resBanner.className = 'result-banner pass';
                 title.innerText = '✅ 雨遮裝飾物合格';
-                desc.innerText = `深度 {depth}m (≤1.0m)、欄杆高 {rh}cm (≤90cm)、窗台高 {sill}m (≥1.2m)。`;
+                desc.innerText = `深度 ${depth.toFixed(1)} 公尺 (≤ 1.0 公尺)、欄杆高 ${rh} 公分 (≤ 90 公分)、窗台高 ${sill.toFixed(1)} 公尺 (≥ 1.2 公尺)。`;
             } else {
                 resBanner.className = 'result-banner fail';
                 title.innerText = '❌ 雨遮裝飾物不合格';
                 let errs = [];
-                if (depth > 1.0) errs.push(`雨遮深度 {depth}m 超過 1.0m 限制`);
-                if (rh > 90) errs.push(`欄杆高度 {rh}cm 超過 90cm 限制`);
-                if (por < 66.67) errs.push(`格柵透空率 {por}% 低於 2/3`);
-                if (sill < 1.2) errs.push(`當層窗台高度 {sill}m 低於 1.2m 限制`);
+                if (depth > 1.0) errs.push(`雨遮深度 ${depth.toFixed(1)} 公尺 (超過 1.0 公尺限制)`);
+                if (rh > 90) errs.push(`欄杆高度 ${rh} 公分 (超過 90 公分限制)`);
+                if (por < 66.67) errs.push(`格柵透空率 ${por}% (低於 66.7% 要求)`);
+                if (sill < 1.2) errs.push(`當層窗台高度 ${sill.toFixed(1)} 公尺 (低於 1.2 公尺限制)`);
                 desc.innerText = errs.join('；');
             }
         }
@@ -1941,30 +1941,30 @@
                 if (proj <= 1.0) {
                     resBanner.className = 'result-banner pass';
                     title.innerText = '✅ 免計建築面積';
-                    desc.innerText = `飾板突出距離 {proj}m ≤ 1.0m，不計入建築面積。`;
+                    desc.innerText = `飾板突出距離 ${proj.toFixed(1)} 公尺 (≤ 1.0 公尺)，不計入建築面積。`;
                 } else if (proj <= 2.0) {
                     resBanner.className = 'result-banner warn';
                     title.innerText = '⚠️ 應計入建築面積及高度比限制';
-                    desc.innerText = `飾板突出距離 {proj}m > 1.0m 且 ≤ 2.0m，該投影面積應計入建築面積受高度比/後院比限制。`;
+                    desc.innerText = `飾板突出距離 ${proj.toFixed(1)} 公尺 (> 1.0 公尺且 ≤ 2.0 公尺)，該投影面積應計入建築面積，並受高度比與後院比限制。`;
                 } else {
                     resBanner.className = 'result-banner fail';
                     title.innerText = '❌ 突出距離違規';
-                    desc.innerText = `飾板突出距離 {proj}m 超過外牆中心線 2.0m 最大限制！`;
+                    desc.innerText = `飾板突出距離 ${proj.toFixed(1)} 公尺 (超過外牆中心線 2.0 公尺最大限制)！`;
                 }
             } else if (type === 'louver') {
                 if (proj <= 2.0 && por >= 66.67) {
                     resBanner.className = 'result-banner warn';
                     title.innerText = '⚠️ 合格包覆式格柵（應計入建築面積）';
-                    desc.innerText = `透空率 {por}% ≥ 2/3，投影面積需計入建築面積及受高度比限制。`;
+                    desc.innerText = `透空率 ${por}% (≥ 66.7%)，投影面積需計入建築面積，並受高度比限制。`;
                 } else {
                     resBanner.className = 'result-banner fail';
                     title.innerText = '❌ 包覆式格柵違規';
-                    desc.innerText = `突出超過 2.0m 或透空率低於 2/3。`;
+                    desc.innerText = `突出超過 2.0 公尺或透空率低於 66.7%。`;
                 }
             } else {
                 resBanner.className = 'result-banner pass';
                 title.innerText = 'ℹ️ 實心裝飾柱檢討提示';
-                desc.innerText = `裝飾柱寬度需 < 1.5m 且淨間距 ≥ 1.5m 始得免計樓地板面積。`;
+                desc.innerText = `裝飾柱寬度需 < 1.5 公尺且淨間距 ≥ 1.5 公尺始得免計樓地板面積。`;
             }
         }
 
@@ -1986,11 +1986,11 @@
             if (ratio < 30 && por >= 66.67) {
                 resBanner.className = 'result-banner pass';
                 title.innerText = '✅ 出入口造型框架合格';
-                desc.innerText = `圍塑面積占比 {ratio.toFixed(1)}% (< 30%)，透空率 {por}% (≥ 66.7%)。需切結無頂蓋。`;
+                desc.innerText = `圍塑面積占比 ${ratio.toFixed(1)}% (符合 < 30% 要求)，透空率 ${por}% (符合 ≥ 66.7% 要求)。起造人需簽署無頂蓋切結書。`;
             } else {
                 resBanner.className = 'result-banner fail';
                 title.innerText = '❌ 出入口造型框架違規';
-                desc.innerText = `圍塑面積占比 {ratio.toFixed(1)}% (需 < 30%) 或透空率不足 2/3。`;
+                desc.innerText = `圍塑面積占比 ${ratio.toFixed(1)}% (需 < 30%) 或透空率低於 66.7%。`;
             }
         }
 
@@ -2004,7 +2004,7 @@
             items.forEach((item, index) => {
                 const chk = item.querySelector('input').checked;
                 const title = item.querySelector('.title').innerText;
-                report += `{chk ? '☑ [合格]' : '☒ [待補正]'} {title}\n`;
+                report += `${chk ? '☑ [合格]' : '☒ [待補正]'} ${title}\n`;
             });
             report += "----------------------------------------\n依據113.09.24北市都授建字第1136163958號函範例彙編辦理。";
             
