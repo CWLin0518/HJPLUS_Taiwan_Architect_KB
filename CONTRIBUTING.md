@@ -154,6 +154,7 @@ metadata:
 - **SKILL.md 保持精簡**：建議控制在 500 行以內，詳細法規條文或參考資料請放進 `references/` 資料夾。
 - **B 類技能不要刪除 TODO 標記**：`<!-- TODO: Taiwan adaptation needed -->` 是提醒待完成的台灣適配，完成後才能移除。
 - **C 類技能必須有 MCP 範例**：包含 `taiwan-building-code_search_building_code` 等工具呼叫範例，方便 AI 對接官方資料庫。
+- **勿手動編輯自動產生檔**：`docs/data.json`（首頁資料）由 CI 於部署時經 `scripts/update_landing_page.py` 自動重產，**請勿手動編輯或納入 PR**（已列入 `.gitignore`）；README 底部 `<!-- COUNT -->` 技能計數則由 `scripts/update_readme_counts.py` 維護，同樣不需手改。
 
 ## 品質檢查清單（送 PR 前自己過一遍）
 

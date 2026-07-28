@@ -19,3 +19,6 @@ Skills-Architects/
 # wiki/ and outputs/ are local only
 wiki/
 outputs/
+
+# 自動產生檔：CI 於部署時經 scripts/update_landing_page.py 重產，不追蹤於 repo
+docs/data.json
