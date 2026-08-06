@@ -25,6 +25,12 @@ The five methodology skills there are **horizontal rules** that override topical
 [uncertainty-and-source-control](raw/建築顧問方法論/不確定性標示與來源管控/uncertainty-and-source-control/SKILL.md)
 to any content you author (no unsourced penalty/threshold figures, label certainty, keep To-Verify sections).
 
+### Tool-Backed Skills — Confirm Before Launching Anything
+
+A handful of skills under `raw/` ship their own `scripts/` that open a local port, start a server, or otherwise run a live process — not just static reference reading. Mentioning the topic in conversation is not, by itself, permission to launch one. Check the matching skill's own confirmation rule before running its scripts.
+
+- **綠建材 / TABC 綠建材 / green building material** topics → read [green-material-search-toolkit](raw/建築施工與材料/綠建材/綠建材檢索與選用工具/green-material-search-toolkit/SKILL.md) first. Its "Trigger Confirmation Rule" section applies: do **not** run `scripts/local_server.py` (it opens port 8888 and a browser tab) until the user has explicitly confirmed they want the search tool opened — a passing mention of the topic is not confirmation.
+
 ## Project Structure
 All skill content is in `raw/`. There is no separate published/flat structure.
 

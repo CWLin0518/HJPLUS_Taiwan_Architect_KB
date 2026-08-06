@@ -8,6 +8,8 @@ node_modules/
 opencode.json
 opencode.jsonc
 AGENT.md
+__pycache__/
+*.pyc
 
 # Skills-Architects reference repo (not tracked)
 Skills-Architects/
