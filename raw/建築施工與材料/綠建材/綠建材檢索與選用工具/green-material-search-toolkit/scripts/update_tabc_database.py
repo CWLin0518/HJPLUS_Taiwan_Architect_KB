@@ -286,11 +286,14 @@ def _sync_showcase_html(merged: list) -> bool:
 
 
 def update_tabc_database(dry_run: bool = False, progress=print) -> dict:
-    if not os.path.exists(DB_PATH):
-        raise FileNotFoundError(f"找不到主資料庫檔案: {DB_PATH}")
-
-    with open(DB_PATH, "r", encoding="utf-8") as f:
-        existing = json.load(f)
+    if os.path.exists(DB_PATH):
+        with open(DB_PATH, "r", encoding="utf-8") as f:
+            existing = json.load(f)
+    else:
+        # 首次使用（例如剛依 SKILL.md 說明取得本技能，尚未有本機資料庫快取）：
+        # 從空清單開始，本次抓取到的全部視為新增。
+        progress(f"找不到主資料庫檔案，視為首次建置：{DB_PATH}")
+        existing = []
 
     fetched = fetch_all_from_tabc(progress=progress)
     if not fetched:
@@ -303,6 +306,7 @@ def update_tabc_database(dry_run: bool = False, progress=print) -> dict:
     if dry_run:
         return diff
 
+    os.makedirs(ASSETS_DIR, exist_ok=True)
     tmp_path = DB_PATH + ".tmp"
     with open(tmp_path, "w", encoding="utf-8") as f:
         json.dump(merged, f, ensure_ascii=False, indent=2)

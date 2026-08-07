@@ -21,8 +21,17 @@ import datetime
 WORKSPACE = os.path.dirname(os.path.abspath(__file__))
 ASSETS_DIR = os.path.join(WORKSPACE, "..", "assets")
 DB_PATH = os.path.join(ASSETS_DIR, "tabc_master_database.json")
-SETS_FILE = os.path.join(ASSETS_DIR, "exported_material_sets.json")
-REPORT_PATH = os.path.join(ASSETS_DIR, "Material_Advisory_Report.md")
+
+# Set 檔與說明書是使用者的專案成品，預設寫到使用者家目錄下，不落在知識庫的
+# raw/ 樹裡；可用 GREEN_MATERIAL_OUTPUT_DIR 指到任何專案路徑，需與
+# local_server.py 使用同一個值才能讀寫同一份 Set 檔。
+OUTPUT_DIR = os.environ.get(
+    "GREEN_MATERIAL_OUTPUT_DIR",
+    os.path.join(os.path.expanduser("~"), ".green-material-toolkit"),
+)
+os.makedirs(OUTPUT_DIR, exist_ok=True)
+SETS_FILE = os.path.join(OUTPUT_DIR, "exported_material_sets.json")
+REPORT_PATH = os.path.join(OUTPUT_DIR, "Material_Advisory_Report.md")
 
 
 def load_database():
@@ -143,7 +152,6 @@ def generate_material_advisory(set_name: str, licno_list=None, user_intent: str 
         "unmatchedLicnos": unmatched_still,
     }
 
-    os.makedirs(ASSETS_DIR, exist_ok=True)
     _write_markdown_report(advisory)
     print(f"Successfully generated advisory {advisory_id} with {len(material_entries)} materials: "
           f"{[m['licno'] for m in material_entries]}.")
@@ -222,7 +230,6 @@ def write_back_to_set_manager(set_name: str, advisory: dict, purpose_override: s
     sets[matched_key]["advisoryId"] = advisory["advisoryId"]
     sets[matched_key]["updatedAt"] = datetime.datetime.now().isoformat()
 
-    os.makedirs(ASSETS_DIR, exist_ok=True)
     with open(SETS_FILE, "w", encoding="utf-8") as f:
         json.dump(sets, f, ensure_ascii=False, indent=2)
 

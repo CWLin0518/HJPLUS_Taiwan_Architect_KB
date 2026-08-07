@@ -29,7 +29,15 @@ PORT = 8888
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 ASSETS_DIR = os.path.join(SCRIPT_DIR, "..", "assets")
 HTML_FILE = os.path.join(ASSETS_DIR, "green-material-toolkit.html")
-SETS_FILE = os.path.join(ASSETS_DIR, "exported_material_sets.json")
+
+# Set 檔是使用者的專案成品，預設寫到使用者家目錄下，不落在知識庫的 raw/ 樹裡；
+# 可用 GREEN_MATERIAL_OUTPUT_DIR 指到任何專案路徑（例如某個 BIM 專案資料夾）。
+OUTPUT_DIR = os.environ.get(
+    "GREEN_MATERIAL_OUTPUT_DIR",
+    os.path.join(os.path.expanduser("~"), ".green-material-toolkit"),
+)
+os.makedirs(OUTPUT_DIR, exist_ok=True)
+SETS_FILE = os.path.join(OUTPUT_DIR, "exported_material_sets.json")
 
 
 class Handler(http.server.BaseHTTPRequestHandler):
@@ -37,16 +45,6 @@ class Handler(http.server.BaseHTTPRequestHandler):
         # 只顯示 API 請求，過濾靜態資源雜訊
         if "/api/" in (args[0] if args else ""):
             print(f"  [API] {format % args}")
-
-    def send_cors_headers(self):
-        self.send_header("Access-Control-Allow-Origin", "*")
-        self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
-        self.send_header("Access-Control-Allow-Headers", "Content-Type")
-
-    def do_OPTIONS(self):
-        self.send_response(200)
-        self.send_cors_headers()
-        self.end_headers()
 
     def do_GET(self):
         parsed = urlparse(self.path)
@@ -58,13 +56,11 @@ class Handler(http.server.BaseHTTPRequestHandler):
                 with open(SETS_FILE, "r", encoding="utf-8") as f:
                     data = f.read()
                 self.send_response(200)
-                self.send_cors_headers()
                 self.send_header("Content-Type", "application/json; charset=utf-8")
                 self.end_headers()
                 self.wfile.write(data.encode("utf-8"))
             else:
                 self.send_response(404)
-                self.send_cors_headers()
                 self.send_header("Content-Type", "application/json; charset=utf-8")
                 self.end_headers()
                 self.wfile.write(json.dumps({"error": "尚未匯出任何 Set"}).encode())
@@ -76,7 +72,6 @@ class Handler(http.server.BaseHTTPRequestHandler):
                 with open(HTML_FILE, "r", encoding="utf-8") as f:
                     content = f.read()
                 self.send_response(200)
-                self.send_cors_headers()
                 self.send_header("Content-Type", "text/html; charset=utf-8")
                 self.end_headers()
                 self.wfile.write(content.encode("utf-8"))
@@ -107,7 +102,6 @@ class Handler(http.server.BaseHTTPRequestHandler):
             with open(file_path, mode, **({"encoding": "utf-8"} if mode == "r" else {})) as f:
                 data = f.read()
             self.send_response(200)
-            self.send_cors_headers()
             self.send_header("Content-Type", content_type)
             self.end_headers()
             if isinstance(data, str):
@@ -145,7 +139,6 @@ class Handler(http.server.BaseHTTPRequestHandler):
                     "sets": set_names
                 }, ensure_ascii=False)
                 self.send_response(200)
-                self.send_cors_headers()
                 self.send_header("Content-Type", "application/json; charset=utf-8")
                 self.end_headers()
                 self.wfile.write(resp.encode("utf-8"))
@@ -153,7 +146,6 @@ class Handler(http.server.BaseHTTPRequestHandler):
             except Exception as e:
                 err = json.dumps({"success": False, "error": str(e)}, ensure_ascii=False)
                 self.send_response(500)
-                self.send_cors_headers()
                 self.send_header("Content-Type", "application/json; charset=utf-8")
                 self.end_headers()
                 self.wfile.write(err.encode("utf-8"))
@@ -166,7 +158,7 @@ def main():
         sys.stdout.reconfigure(encoding='utf-8')
     os.chdir(ASSETS_DIR)
 
-    with socketserver.TCPServer(("", PORT), Handler) as httpd:
+    with socketserver.TCPServer(("127.0.0.1", PORT), Handler) as httpd:
         httpd.allow_reuse_address = True
         url = f"http://localhost:{PORT}"
         print("=" * 60)
