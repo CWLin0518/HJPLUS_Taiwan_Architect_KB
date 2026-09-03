@@ -25,6 +25,13 @@
 <details>
 <summary>點開查看近期已合併的 PR（感謝所有貢獻者！）</summary>
 
+- **2026-08-29** 🤖 新增 Revit AI 目標判定與安全執行工作流程（本庫第一個完整 Revit 知識入口：證明目標集合、分級唯讀檢查、風險預覽、獨立讀回與證據契約）([#70](https://github.com/h30190/HJPLUS_Taiwan_Architect_KB/pull/70) by @NicheSam)
+- **2026-08-29** 📐 新增臺北市建照圖說繪製與圖冊編排技能（A101–A7 標準編排、44 項建照申請書圖檢核、無紙化系統 N 系列檔名前綴與公會對副本校對 SOP；僅適用臺北市）([#69](https://github.com/h30190/HJPLUS_Taiwan_Architect_KB/pull/69) by @ray92chiu-png)
+- **2026-08-29** 🛣️ 新增市區道路及附屬工程設計規範三技能（總則位階與用詞規則、人行空間與無障礙、道路景觀與植栽；標準與規範文字不一致處並列標位階）([#63](https://github.com/h30190/HJPLUS_Taiwan_Architect_KB/pull/63) by @deartotoro)
+- **2026-08-29** 📝 24 個技能 description 補中文觸發詞與分工聲明，機電物料尺寸範圍勘誤、EEWH 誤植更正、6 個 domain.md 斷鏈清理 ([#56](https://github.com/h30190/HJPLUS_Taiwan_Architect_KB/pull/56) by @Rumi-3653；英制管徑下限於 [#72](https://github.com/h30190/HJPLUS_Taiwan_Architect_KB/pull/72) 更正)
+- **2026-08-29** 🌿 綠建材工具改為與 Agent 同步並新增 Set 專案匯出／匯入，UI 抽離為乾淨模板進版控（TABC 資料不隨庫散布）([#57](https://github.com/h30190/HJPLUS_Taiwan_Architect_KB/pull/57) by @CWLin0518；匯入轉義於 [#71](https://github.com/h30190/HJPLUS_Taiwan_Architect_KB/pull/71) 補強)
+- **2026-08-13** 🏷️ 統一 24 份 domain.md 的顯示標題：7 個英文 H1 中文化、混凝土「版」→「板」、建照四類帶執照別（`title` 與 H1 同步修正）([#58](https://github.com/h30190/HJPLUS_Taiwan_Architect_KB/pull/58) by @Rumi-3653)
+- **2026-08-13** 📝 新增台北市建照變更設計報備流程技能（自行報備／抽查後報備判準、掛件對副本流程、結構外審用印順序）([#51](https://github.com/h30190/HJPLUS_Taiwan_Architect_KB/pull/51) by @ray92chiu-png)
 - **2026-08-07** 🌿 新增 TABC 綠建材檢索與選用工具技能（本機檢索平台＋選用說明書產生；認證資料與成品不隨庫散布，首次使用時於本機取得）([#47](https://github.com/h30190/HJPLUS_Taiwan_Architect_KB/pull/47) by @CWLin0518)
 - **2026-08-07** 🔧 新增台灣機電物料規格技能模組 tw-mep-spec-wiki（目前收錄高興昌配管，含 CNS 編號、管徑、來料長度與接合工法解碼）([#38](https://github.com/h30190/HJPLUS_Taiwan_Architect_KB/pull/38) by @openudm3-dotcom)
 - **2026-08-07** ⚡ 新增台灣機電單位標準與法規設計階段技能（度量衡單位慣例、法規→設計階段→強制性→技師簽證對應）([#46](https://github.com/h30190/HJPLUS_Taiwan_Architect_KB/pull/46) by @shuotao)
@@ -115,9 +122,9 @@ Archicad、Revit 等 BIM 及設計工具技能
 ## 技能分類說明
 
 <!-- COUNT:summary -->
-| **A 類通用技能** | 10 個 | 國際通用標準，無需台灣適配 | AI + 人類直接使用 |
+| **A 類通用技能** | 11 個 | 國際通用標準，無需台灣適配 | AI + 人類直接使用 |
 | **B 類適配技能** | 10 個 | 國際規範→台灣適配，保留 TODO 注記 | 國際→台灣雙向支援 |
-| **C 類台灣法規技能** | 64 個 | 完全台灣法規，MCP 工具對接 | 台灣法規本位，官方對接 |
+| **C 類台灣法規技能** | 69 個 | 完全台灣法規，MCP 工具對接 | 台灣法規本位，官方對接 |
 
 ---
 
@@ -209,6 +216,14 @@ description: "This skill should be used when [具體觸發情境]。"
 我們歡迎各種貢獻以使此知識庫更加完整。請閱讀 [CONTRIBUTING.md](CONTRIBUTING.md) 檔案以了解貢獻指南。
 
 不會用 GitHub 也沒關係——開一則 [知識/經驗投稿](../../issues/new?template=knowledge.yml)，把你的實務經驗用自己的話寫下來就好，格式交給維護者整理。
+
+## 🤝 關聯專案
+
+### [REVIT_MCP_study](https://github.com/shuotao/REVIT_MCP_study) — by [@shuotao](https://github.com/shuotao)
+
+把 Revit 接上 MCP 的實作研究。兩個專案方向互補：這裡累積**台灣 AEC 的實務經驗與判準**，那裡處理**BIM 工具端的實際操作**，正在往互相搭配的方向合作。
+
+本庫的 [綠建材檢索與選用工具](raw/建築施工與材料/綠建材/綠建材檢索與選用工具/) 技能就是這樣分工的實例——檢索介面本體來自該專案，本庫收錄的是操作說明、爬取腳本與選用說明書產生器。
 
 ## 授權
 
