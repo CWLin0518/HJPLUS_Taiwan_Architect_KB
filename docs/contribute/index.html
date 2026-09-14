@@ -250,6 +250,87 @@
   </div>
 </section>
 
+<!-- ═══ 讓 AI 助手直接接上知識庫 ═══ -->
+<section class="tinted">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">工具</p>
+      <h2 id="mcp" data-nav="讓 AI 接上">讓你的 AI 助手直接接上這個知識庫</h2>
+      <p class="lead">
+        上面那些命名規則、frontmatter 欄位，你其實不必背。
+        這個庫附了一個 MCP server —— 接上之後，AI 助手會直接讀到現行的知識庫，
+        查得到條目，也拿得到正確的投稿範本。
+      </p>
+    </div>
+
+    <div class="grid grid-2">
+      <div class="card">
+        <span class="tag">查</span>
+        <h3>問它法規，它答得出處</h3>
+        <p>
+          「陽臺容積怎麼回計？」「§162 是哪一條？」——
+          它會找出對應的技能模組、回傳全文，並附上這一條<strong>有沒有經過人工查證</strong>。
+          沒查證的它會明講，要你自己核對法規原文。
+        </p>
+      </div>
+
+      <div class="card">
+        <span class="tag">寫</span>
+        <h3>投稿前先幫你擋掉重複與格式錯</h3>
+        <p>
+          要寫新題目時，它會先查有沒有人寫過、名稱有沒有撞號，
+          再給你 <code>知識樣板/</code> 的最新範本與該分類慣用的分類代號。
+          你只要專心寫內容。
+        </p>
+      </div>
+    </div>
+
+    <div class="prose" style="margin-top:32px">
+      <h3>怎麼接</h3>
+      <p>
+        需要先安裝 <a href="https://nodejs.org/" target="_blank" rel="noopener">Node.js</a>（20 以上），
+        然後把這個庫抓下來：
+      </p>
+      <div class="code-block">
+        git clone https://github.com/h30190/HJPLUS_Taiwan_Architect_KB.git<br>
+        cd HJPLUS_Taiwan_Architect_KB/mcp<br>
+        npm install --omit=dev
+      </div>
+      <p>
+        接著在你的 AI 工具（Claude Code、Claude Desktop、Cursor 等支援 MCP 的軟體）
+        設定檔中加入這一段，把路徑換成你剛剛 clone 的位置：
+      </p>
+      <div class="code-block">
+        {<br>
+        &nbsp;&nbsp;"mcpServers": {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;"tw-architect-kb": {<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"command": "node",<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"args": ["<strong>你的路徑</strong>/mcp/src/index.js"]<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+        &nbsp;&nbsp;}<br>
+        }
+      </div>
+      <p>
+        存檔、重開軟體就生效。知識庫更新時它會自動讀到最新版本，不用重裝。
+      </p>
+
+      <div class="callout">
+        <p class="mb-0">
+          <strong>它不會替你送出任何東西。</strong>
+          這個 server 只能讀，不能改你的檔案、也不會自動開 PR ——
+          寫檔案、送 PR 仍然是你自己決定。格式的最終把關也還是
+          <code>scripts/validate_okf.py</code>，送 PR 前記得跑一次。
+        </p>
+      </div>
+
+      <p class="small muted">
+        設定卡住，或想知道它實際怎麼運作，見
+        <a href="https://github.com/h30190/HJPLUS_Taiwan_Architect_KB/blob/main/mcp/README.md" target="_blank" rel="noopener">mcp/README.md</a>。
+      </p>
+    </div>
+  </div>
+</section>
+
 <section class="dark tight">
   <div class="container center">
     <h2 data-nav="算不算數？">不確定自己的經驗算不算數？</h2>

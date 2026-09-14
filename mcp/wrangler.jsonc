@@ -1,0 +1,14 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "tw-architect-kb-mcp",
+  "main": "src/worker.js",
+  "compatibility_date": "2026-09-01",
+  // nodejs_compat covers the SDK's occasional Node-shaped imports; the server
+  // code itself stays on web-standard fetch/URL/Request.
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": {
+    "enabled": true
+  }
+  // No Durable Objects, no KV, no bindings: MCP is stateless as of the
+  // 2026-07-28 spec and the knowledge index lives on GitHub Pages.
+}

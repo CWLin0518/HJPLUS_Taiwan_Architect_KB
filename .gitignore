@@ -31,3 +31,6 @@ docs/kb.json
 # Python 位元碼快取（執行技能腳本時會自動產生）
 __pycache__/
 *.pyc
+
+# Wrangler 本機狀態（wrangler dev 的 miniflare 快取與 bundle 暫存）
+.wrangler/
